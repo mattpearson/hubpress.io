@@ -11,4 +11,21 @@ ISAKMP - This is part of the security mechanism and is a subset of IKE.  http://
 GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html
 PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
 VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.  
+Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package. 
+
+To get started, you'll need a so-called "Rollover Cable". http://www.ebay.com/sch/i.html?_nkw=cisco+rollover+usb&_sacat=0
+This allows you to configure the router over a serial protocol. Use putty to connect, and choose Serial for the method. For my setup, it was COM3 and 9600 baud. 
+
+Once you connect, there will be a few key commands that you'll use over and over:
+"write erase" -- This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router. 
+"copy running-config startup-config" -- This will copy the configuration that you have created to be the one run when the router is rebooted.
+"enable" -- This will bring the router into priviledged mode so you can issue basic show commands.
+"config t" -- This will bring the router into global configuration mode where you can actually change settings.
+
+I recommend "write erase" first (to restore factory configuration), and then building out your topology from there.
+Next, "enable" to go into priviledged mode.
+Then, "show running-config" to see what the initial configuration looks like. 
+Lastly, "config t" so you can start changing settings.
+
+
 
