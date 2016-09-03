@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Sep 2016 18:33:55 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[CME New Release VPN]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Sep 2016 18:34:36 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[CME New Release VPN]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange&#8217;s New Release environment over a self-hosted VPN connection. It&#8217;s meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection.</p>
@@ -13,10 +13,16 @@
 </div>
 <div class="paragraph">
 <p>For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
-ISAKMP - This is part of the security mechanism and is a subset of IKE.  <a href="http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp" class="bare">http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp</a>
-GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. <a href="http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html" class="bare">http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html</a>
-PIM - Protocol Independent Multicast. You&#8217;ll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. <a href="http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html" class="bare">http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html</a>
-VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.
+ISAKMP - This is part of the security mechanism and is a subset of IKE.  <a href="http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp" class="bare">http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp</a></p>
+</div>
+<div class="paragraph">
+<p>GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. <a href="http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html" class="bare">http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html</a></p>
+</div>
+<div class="paragraph">
+<p>PIM - Protocol Independent Multicast. You&#8217;ll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. <a href="http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html" class="bare">http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html</a></p>
+</div>
+<div class="paragraph">
+<p>VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.
 Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package, not the Advanced Security package despite the need for a VPN tunnel! Make sure you are running a package with the K9 designator because it has AES/3DES encryption.
 ACL - Access Lists. These allow you to choose what traffic can and can not go through your router.
 NAT - Network Address Translation. This is a technology that allows your router to create a sub network and, through the use of differing ports, pass the traffic through one (public) IP. "ip nat inside" tells the vlan to NAT ip that are connected to it, and "ip nat outside" tells the interface (you would execute this command on your WAN port) to NAT traffic to the outside world.
