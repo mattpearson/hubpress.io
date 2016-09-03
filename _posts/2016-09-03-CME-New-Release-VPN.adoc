@@ -1,0 +1,14 @@
+= CME New Release VPN
+
+This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange's New Release environment over a self-hosted VPN connection. It's meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection.
+
+== Step 1: Router
+
+You will need a router with built-in ISAKMP and IPSEC capabilities. One of the low cost options is to go with an 800 series Cisco router such as the 871W which you can pick up on Ebay for $50 to $60 and it includes wireless capabilities.
+
+For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
+ISAKMP - This is part of the security mechanism and is a subset of IKE.  http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp
+GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html
+PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
+VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.  
+
