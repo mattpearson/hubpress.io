@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870918559" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870972520" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
@@ -21,11 +21,11 @@
     <meta property="og:site_name" content="mattpearson blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="RP Filtering" />
-    <meta property="og:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn it off this filtering, and allow multicast traffic" />
+    <meta property="og:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off (disable) this filtering, and allow multicast traffic" />
     <meta property="og:url" content="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="RP Filtering" />
-    <meta name="twitter:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn it off this filtering, and allow multicast traffic" />
+    <meta name="twitter:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off (disable) this filtering, and allow multicast traffic" />
     <meta name="twitter:url" content="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
     
     <script type="application/ld+json">
@@ -65,7 +65,7 @@ null
 <p>Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.</p>
 </div>
 <div class="paragraph">
-<p>To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:</p>
+<p>To turn off (disable) this filtering, and allow multicast traffic through, set the rp_filter to 0:</p>
 </div>
 <div class="paragraph">
 <p>echo "0" &gt; /proc/sys/net/ipv4/conf/all/rp_filter</p>
@@ -149,8 +149,8 @@ and
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870918559"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870918559"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870972520"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870972520"></script>
 
 </body>
 </html>
