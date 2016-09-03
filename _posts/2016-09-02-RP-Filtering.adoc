@@ -5,7 +5,7 @@ Out of the box linux installations oftentimes enable so-called "reverse path" fi
 
 To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:
 
-echo "1" > /proc/sys/net/ipv4/conf/all/rp_filter
+echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
 
 
 
