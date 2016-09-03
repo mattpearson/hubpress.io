@@ -11,21 +11,39 @@ ISAKMP - This is part of the security mechanism and is a subset of IKE.  http://
 GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html
 PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
 VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.  
-Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package. 
+Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package, not the Advanced Security package despite the need for a VPN tunnel! Make sure you are running a package with the K9 designator because it has AES/3DES encryption.
+ACL - Access Lists. These allow you to choose what traffic can and can not go through your router.
 
-To get started, you'll need a so-called "Rollover Cable". http://www.ebay.com/sch/i.html?_nkw=cisco+rollover+usb&_sacat=0
-This allows you to configure the router over a serial protocol. Use putty to connect, and choose Serial for the method. For my setup, it was COM3 and 9600 baud. 
+== Step 2: Hardware
+In addition to the 800 series Router, to get started, you'll need a so-called "Rollover Cable". http://www.ebay.com/sch/i.html?_nkw=cisco+rollover+usb&_sacat=0
+This allows you to configure the router over a serial protocol. Use putty to connect, and choose Serial for the method. For my setup, it was COM3 and 9600 baud.
+To connect to CME you'll need to have two physical interfaces available on your server. One for public IP traffic, and the other for CME New Release traffic. 
 
-Once you connect, there will be a few key commands that you'll use over and over:
+== Step 3: Big Picture
+Create two VLANs, one for public IP traffic ("Vlan 10"), and the other for CME New Release traffic ("Vlan 20"). For wireless models, you'll add the wireless connection to be part of Vlan 10.  Assign two of the fast ethernet ports to vlan 10, and the other two to Vlan 20. This will allow you to have two physical connections to public IP and two to New Release. You can always attach a switch to a vlan 10 port to expand access to other devices.  To have the appropriate IPs assigned to each VLAN, you'll create two DHCP pools for which IPs can come. On the vlan 10, you can stay with the traditional 192.168.1.x range and on vlan 20, you must use the range that the CME assigns you. 
+
+== Step 4: Configure Router
+
+Once you connect to the router, there will be a few key commands that you'll use over and over:
+
 "write erase" -- This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router. 
 "copy running-config startup-config" -- This will copy the configuration that you have created to be the one run when the router is rebooted.
 "enable" -- This will bring the router into priviledged mode so you can issue basic show commands.
 "config t" -- This will bring the router into global configuration mode where you can actually change settings.
+"exit" -- Go back up one "level" in your configuration. For example if you are configuring a sub-interface and want to return back to the interface level, just type exit.
+"shut" -- Brings down an interface.
+"no XXXX" -- Removes or takes away a command. For example, if you type "no shut", then it will bring UP an interface. Likewise, "no ip pim sparse-mode" will REMOVE the "ip pim sparse-mode" from the configuration. 
+
 
 I recommend "write erase" first (to restore factory configuration), and then building out your topology from there.
 Next, "enable" to go into priviledged mode.
 Then, "show running-config" to see what the initial configuration looks like. 
 Lastly, "config t" so you can start changing settings.
 
+
+
+http://stevehardie.com/2013/05/cisco-877w-configure-wireless-and-wired-on-single-subnet/
+https://supportforums.cisco.com/discussion/11801006/does-configuring-two-vlans-cisco-871-router-divides-bandwidth-internet-half
+https://supportforums.cisco.com/discussion/10567086/change-ip-router-cisco-871
 
 
