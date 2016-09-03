@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870985105" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472871007153" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
@@ -21,11 +21,11 @@
     <meta property="og:site_name" content="mattpearson blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="RP Filtering" />
-    <meta property="og:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off (disable) this filtering, and allow multicast traffic" />
+    <meta property="og:description" content="Why is multicast traffic not coming through? Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off" />
     <meta property="og:url" content="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="RP Filtering" />
-    <meta name="twitter:description" content="Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off (disable) this filtering, and allow multicast traffic" />
+    <meta name="twitter:description" content="Why is multicast traffic not coming through? Out of the box linux installations oftentimes enable so-called &quot;reverse path&quot; filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped. To turn off" />
     <meta name="twitter:url" content="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
     
     <script type="application/ld+json">
@@ -61,7 +61,10 @@ null
         </header>
 
         <section class="post-content">
-            <div class="paragraph">
+            <div class="sect1">
+<h2 id="_why_is_multicast_traffic_not_coming_through">Why is multicast traffic not coming through?</h2>
+<div class="sectionbody">
+<div class="paragraph">
 <p>Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.</p>
 </div>
 <div class="paragraph">
@@ -79,6 +82,8 @@ ipv4.conf.all.rp_filter = 0</p>
 <a href="http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering" class="bare">http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering</a>
 and
 <a href="http://centoshowtos.org/network-and-security/rp_filter/" class="bare">http://centoshowtos.org/network-and-security/rp_filter/</a></p>
+</div>
+</div>
 </div>
         </section>
 
@@ -149,8 +154,8 @@ and
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870985105"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870985105"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472871007153"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472871007153"></script>
 
 </body>
 </html>
