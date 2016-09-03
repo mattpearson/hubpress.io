@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870691500" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870773431" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
@@ -71,13 +71,14 @@ echo "1" &gt; /proc/sys/net/ipv4/conf/all/rp_filter
 :compat mode: false</p>
 </div>
 <div class="paragraph">
-<p>Don&#8217;t forget to also set net.ipv4.conf.all.rp_filter = 0 in /etc/sysctl.conf</p>
+<p>Lastly, edit /etc/sysctl.conf and change:
+ipv4.conf.all.rp_filter = 0</p>
 </div>
 <div class="paragraph">
-<p>More information available here:</p>
-</div>
-<div class="paragraph">
-<p><a href="http://centoshowtos.org/network-and-security/rp_filter/" class="bare">http://centoshowtos.org/network-and-security/rp_filter/</a></p>
+<p>More information available:
+<a href="http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering" class="bare">http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering</a>
+and
+<a href="http://centoshowtos.org/network-and-security/rp_filter/" class="bare">http://centoshowtos.org/network-and-security/rp_filter/</a></p>
 </div>
         </section>
 
@@ -148,8 +149,8 @@ echo "1" &gt; /proc/sys/net/ipv4/conf/all/rp_filter
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870691500"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870691500"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870773431"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870773431"></script>
 
 </body>
 </html>
