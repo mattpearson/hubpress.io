@@ -67,7 +67,9 @@ https://supportforums.cisco.com/discussion/11801006/does-configuring-two-vlans-c
 https://supportforums.cisco.com/discussion/10567086/change-ip-router-cisco-871
 
 == Sample Router Configuration
-{{{
+
+[%hardbreaks]
+
 version 12.4
 no service pad
 service timestamps debug datetime msec
@@ -200,4 +202,4 @@ ip nat inside source list 1 interface FastEthernet4 overload
 !
 access-list 1 permit 10.249.71.0 0.0.0.255
 
-}}}
+
