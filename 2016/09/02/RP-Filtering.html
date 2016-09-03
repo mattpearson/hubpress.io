@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870773431" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472870853030" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/02/RP-Filtering.html" />
@@ -65,10 +65,10 @@ null
 <p>Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.</p>
 </div>
 <div class="paragraph">
-<p>To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:
-:compat mode: true
-echo "1" &gt; /proc/sys/net/ipv4/conf/all/rp_filter
-:compat mode: false</p>
+<p>To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:</p>
+</div>
+<div class="paragraph">
+<p>echo "1" &gt; /proc/sys/net/ipv4/conf/all/rp_filter</p>
 </div>
 <div class="paragraph">
 <p>Lastly, edit /etc/sysctl.conf and change:
@@ -149,8 +149,8 @@ and
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870773431"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870773431"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472870853030"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472870853030"></script>
 
 </body>
 </html>
