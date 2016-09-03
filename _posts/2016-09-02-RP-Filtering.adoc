@@ -1,0 +1,15 @@
+= RP Filtering
+== Why is multicast traffic not coming through?
+
+Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.
+
+To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:
+:compat mode: true
+echo "1" > /proc/sys/net/ipv4/conf/all/rp_filter
+:compat mode: false
+
+Don't forget to also set net.ipv4.conf.all.rp_filter = 0 in /etc/sysctl.conf 
+
+More information available here:
+
+http://centoshowtos.org/network-and-security/rp_filter/
