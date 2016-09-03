@@ -4,7 +4,13 @@
     "repositoryName": "mattpearson.github.io",
     "branch": "master"
   },
+  "site": {
+    "title": "mattpearson blog",
+    "description": "computer science and quantiative finance",
+    "postsPerPage": ""
+  },
+  "socialnetwork": {},
   "theme": {
-    "name": "Casper"
+    "name": "casper"
   }
 }
