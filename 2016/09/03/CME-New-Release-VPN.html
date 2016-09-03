@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472927635795" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472927676269" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
@@ -76,10 +76,16 @@ null
 </div>
 <div class="paragraph">
 <p>For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
-ISAKMP - This is part of the security mechanism and is a subset of IKE.  <a href="http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp" class="bare">http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp</a>
-GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. <a href="http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html" class="bare">http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html</a>
-PIM - Protocol Independent Multicast. You&#8217;ll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. <a href="http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html" class="bare">http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html</a>
-VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.
+ISAKMP - This is part of the security mechanism and is a subset of IKE.  <a href="http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp" class="bare">http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp</a></p>
+</div>
+<div class="paragraph">
+<p>GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. <a href="http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html" class="bare">http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html</a></p>
+</div>
+<div class="paragraph">
+<p>PIM - Protocol Independent Multicast. You&#8217;ll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. <a href="http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html" class="bare">http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html</a></p>
+</div>
+<div class="paragraph">
+<p>VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.
 Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package, not the Advanced Security package despite the need for a VPN tunnel! Make sure you are running a package with the K9 designator because it has AES/3DES encryption.
 ACL - Access Lists. These allow you to choose what traffic can and can not go through your router.
 NAT - Network Address Translation. This is a technology that allows your router to create a sub network and, through the use of differing ports, pass the traffic through one (public) IP. "ip nat inside" tells the vlan to NAT ip that are connected to it, and "ip nat outside" tells the interface (you would execute this command on your WAN port) to NAT traffic to the outside world.
@@ -367,8 +373,8 @@ access-list 1 permit 10.249.71.0 0.0.0.255</p>
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472927635795"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472927635795"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472927676269"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472927676269"></script>
 
 </body>
 </html>
