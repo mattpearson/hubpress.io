@@ -1,4 +1,5 @@
 = RP Filtering
+
 == Why is multicast traffic not coming through?
 
 Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.
