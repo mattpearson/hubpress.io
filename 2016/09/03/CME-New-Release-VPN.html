@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472927676269" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472927978134" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
@@ -170,7 +170,8 @@ tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24</p>
 <h2 id="_sample_router_configuration">Sample Router Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>version 12.4
+<p>{{{
+version 12.4
 no service pad
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -302,6 +303,9 @@ ip nat inside source list 1 interface FastEthernet4 overload
 !
 access-list 1 permit 10.249.71.0 0.0.0.255</p>
 </div>
+<div class="paragraph">
+<p>}}}</p>
+</div>
 </div>
 </div>
         </section>
@@ -373,8 +377,8 @@ access-list 1 permit 10.249.71.0 0.0.0.255</p>
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472927676269"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472927676269"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472927978134"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472927978134"></script>
 
 </body>
 </html>
