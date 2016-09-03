@@ -8,8 +8,10 @@ To turn it off this filtering, and allow multicast traffic through, set the rp_f
 echo "1" > /proc/sys/net/ipv4/conf/all/rp_filter
 :compat mode: false
 
-Don't forget to also set net.ipv4.conf.all.rp_filter = 0 in /etc/sysctl.conf 
+Lastly, edit /etc/sysctl.conf and change:
+ipv4.conf.all.rp_filter = 0
 
-More information available here:
-
+More information available:
+http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering
+and
 http://centoshowtos.org/network-and-security/rp_filter/
