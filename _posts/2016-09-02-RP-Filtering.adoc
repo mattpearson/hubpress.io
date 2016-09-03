@@ -3,7 +3,7 @@
 
 Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.
 
-To turn it off this filtering, and allow multicast traffic through, set the rp_filter to 0:
+To turn off (disable) this filtering, and allow multicast traffic through, set the rp_filter to 0:
 
 echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
 
