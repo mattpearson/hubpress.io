@@ -6,7 +6,7 @@ This guide is written to help others go through the process of configuring a sys
 
 You will need a router with built-in ISAKMP and IPSEC capabilities. One of the low cost options is to go with an 800 series Cisco router such as the 871W which you can pick up on Ebay for $50 to $60 and it includes wireless capabilities.
 
-For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
+. For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
 * ISAKMP - This is part of the security mechanism and is a subset of IKE.  http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp
 * GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html
 * PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
@@ -29,21 +29,19 @@ Note for Wireless users: In order to get wireless working propertly, you'll need
 
 == Step 4: Configure Router
 
-Once you connect to the router, there will be a few key commands that you'll use over and over:
+. Once you connect to the router, there will be a few key commands that you'll use over and over:
+* "write erase" -- This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router. 
+* "copy running-config startup-config" -- This will copy the configuration that you have created to be the one run when the router is rebooted.
+* "enable" -- This will bring the router into priviledged mode so you can issue basic show commands.
+* "config t" -- This will bring the router into global configuration mode where you can actually change settings.
+* "exit" -- Go back up one "level" in your configuration. For example if you are configuring a sub-interface and want to return back to the interface level, just type exit.
+* "shut" -- Brings down an interface.
+* "no XXXX" -- Removes or takes away a command. For example, if you type "no shut", then it will bring UP an interface. Likewise, "no ip pim sparse-mode" will REMOVE the "ip pim sparse-mode" from the configuration. 
 
-"write erase" -- This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router. 
-"copy running-config startup-config" -- This will copy the configuration that you have created to be the one run when the router is rebooted.
-"enable" -- This will bring the router into priviledged mode so you can issue basic show commands.
-"config t" -- This will bring the router into global configuration mode where you can actually change settings.
-"exit" -- Go back up one "level" in your configuration. For example if you are configuring a sub-interface and want to return back to the interface level, just type exit.
-"shut" -- Brings down an interface.
-"no XXXX" -- Removes or takes away a command. For example, if you type "no shut", then it will bring UP an interface. Likewise, "no ip pim sparse-mode" will REMOVE the "ip pim sparse-mode" from the configuration. 
-
-
-Execute "write erase" first (to restore factory configuration).
-Next, "enable" to go into priviledged mode.
-Then, "show running-config" to see what the initial configuration looks like. 
-Lastly, "config t" so you can start changing settings (you should see the '#' prompt which means you can now issue commands).
+. Execute "write erase" first (to restore factory configuration).
+* Next, "enable" to go into priviledged mode.
+* Then, "show running-config" to see what the initial configuration looks like. 
+* Lastly, "config t" so you can start changing settings (you should see the '#' prompt which means you can now issue commands).
 
 Once you are in this mode, type in the commands from the attached configuration file.
 
