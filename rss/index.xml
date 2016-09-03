@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Sep 2016 02:49:45 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RP Filtering]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Sep 2016 02:50:07 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[RP Filtering]]></title><description><![CDATA[<div class="sect1">
+<h2 id="_why_is_multicast_traffic_not_coming_through">Why is multicast traffic not coming through?</h2>
+<div class="sectionbody">
+<div class="paragraph">
 <p>Out of the box linux installations oftentimes enable so-called "reverse path" filtering. This essentially means that if the source ip of the udp packet is not routable through the interface in which the packet arrived, then it will be dropped.</p>
 </div>
 <div class="paragraph">
@@ -16,4 +19,6 @@ ipv4.conf.all.rp_filter = 0</p>
 <a href="http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering" class="bare">http://www.slashroot.in/linux-kernel-rpfilter-settings-reverse-path-filtering</a>
 and
 <a href="http://centoshowtos.org/network-and-security/rp_filter/" class="bare">http://centoshowtos.org/network-and-security/rp_filter/</a></p>
+</div>
+</div>
 </div>]]></description><link>https://mattpearson.github.io/2016/09/02/RP-Filtering.html</link><guid isPermaLink="true">https://mattpearson.github.io/2016/09/02/RP-Filtering.html</guid><pubDate>Fri, 02 Sep 2016 00:00:00 GMT</pubDate></item></channel></rss>
