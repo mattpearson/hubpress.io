@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472927978134" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1472928105196" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
@@ -170,141 +170,137 @@ tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24</p>
 <h2 id="_sample_router_configuration">Sample Router Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>{{{
-version 12.4
-no service pad
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname Router
-!
-boot-start-marker
-boot-end-marker
-!
-!
-no aaa new-model
-!
-resource policy
-!
-ip cef
-!
-!
-no ip dhcp use vrf connected
-ip dhcp excluded-address 10.249.71.64 10.249.71.255
-!
-ip dhcp pool vlan1pool
-   network 10.249.71.0 255.255.255.0
-   default-router 10.249.71.1
-   dns-server 8.8.8.8
-!
-!
-ip multicast-routing
-!
-!
-!
-!
-!
-!
-crypto isakmp policy 2
- encr 3des
- hash md5
- authentication pre-share
-crypto isakmp key XXXXXXXXXXXXXXXXXXXXX
-!
-!
-crypto ipsec transform-set cmevpn esp-3des esp-md5-hmac
-!
-crypto map cmevpn 1 ipsec-isakmp
- set peer XXX.XXX.XXX.XXX
- set transform-set cmevpn
- match address 100
-!
-bridge irb
-!
-!
-!
-interface Tunnel0
- ip address XXX.XXX.XXX.XXX 255.255.255.252
- ip pim sparse-mode
- tunnel source XXX.XXX.XXX.XXX
- tunnel destination XXX.XXX.XXX.XXX
-!
-interface Loopback0
- ip address 10.249.0.229 255.255.255.255
-!
-interface FastEthernet0
-!
-interface FastEthernet1
-!
-interface FastEthernet2
-!
-interface FastEthernet3
-!
-interface FastEthernet4
- ip address dhcp
- ip nat outside
- ip virtual-reassembly
- duplex auto
- speed auto
- crypto map cmevpn
-!
-interface Dot11Radio0
- no ip address
- !
- broadcast-key vlan 1 change 45
- !
- !
- encryption vlan 1 mode ciphers tkip
- !
- ssid YOUR_SSID_NAME
-    vlan 1
-    authentication open
-    authentication key-management wpa
-    guest-mode
-    wpa-psk ascii 0 YOUR_SSID_PASSWORD
- !
- speed basic-1.0 basic-2.0 basic-5.5 6.0 9.0 basic-11.0 12.0 18.0 24.0 36.0 48.0 54.0
- station-role root
- no cdp enable
-!
-interface Dot11Radio0.1
- encapsulation dot1Q 1 native
- no cdp enable
- bridge-group 1
- bridge-group 1 subscriber-loop-control
- bridge-group 1 spanning-disabled
- bridge-group 1 block-unknown-source
- no bridge-group 1 source-learning
- no bridge-group 1 unicast-flooding
-!
-interface Vlan1
- no ip address
- ip access-group 102 in
- bridge-group 1
- bridge-group 1 spanning-disabled
-!
-interface BVI1
- ip address 10.249.71.1 255.255.255.0
- ip nat inside
- ip virtual-reassembly
-!
-ip route 10.249.254.1 255.255.255.255 FastEthernet4
-ip route 69.50.112.0 255.255.255.128 Tunnel0
-ip route 69.50.112.128 255.255.255.128 FastEthernet4
-ip route 69.50.112.254 255.255.255.255 Tunnel0
-!
-!
-no ip http server
-no ip http secure-server
-ip pim rp-address XXX.XXX.XXX.XXX
-ip mroute 69.50.112.0 255.255.255.128 Tunnel0
-ip nat inside source list 1 interface FastEthernet4 overload
-!
+<p>version 12.4<br>
+no service pad<br>
+service timestamps debug datetime msec<br>
+service timestamps log datetime msec<br>
+no service password-encryption<br>
+!<br>
+hostname Router<br>
+!<br>
+boot-start-marker<br>
+boot-end-marker<br>
+!<br>
+!<br>
+no aaa new-model<br>
+!<br>
+resource policy<br>
+!<br>
+ip cef<br>
+!<br>
+!<br>
+no ip dhcp use vrf connected<br>
+ip dhcp excluded-address 10.249.71.64 10.249.71.255<br>
+!<br>
+ip dhcp pool vlan1pool<br>
+   network 10.249.71.0 255.255.255.0<br>
+   default-router 10.249.71.1<br>
+   dns-server 8.8.8.8<br>
+!<br>
+!<br>
+ip multicast-routing<br>
+!<br>
+!<br>
+!<br>
+!<br>
+!<br>
+!<br>
+crypto isakmp policy 2<br>
+ encr 3des<br>
+ hash md5<br>
+ authentication pre-share<br>
+crypto isakmp key XXXXXXXXXXXXXXXXXXXXX<br>
+!<br>
+!<br>
+crypto ipsec transform-set cmevpn esp-3des esp-md5-hmac<br>
+!<br>
+crypto map cmevpn 1 ipsec-isakmp<br>
+ set peer XXX.XXX.XXX.XXX<br>
+ set transform-set cmevpn<br>
+ match address 100<br>
+!<br>
+bridge irb<br>
+!<br>
+!<br>
+!<br>
+interface Tunnel0<br>
+ ip address XXX.XXX.XXX.XXX 255.255.255.252<br>
+ ip pim sparse-mode<br>
+ tunnel source XXX.XXX.XXX.XXX<br>
+ tunnel destination XXX.XXX.XXX.XXX<br>
+!<br>
+interface Loopback0<br>
+ ip address 10.249.0.229 255.255.255.255<br>
+!<br>
+interface FastEthernet0<br>
+!<br>
+interface FastEthernet1<br>
+!<br>
+interface FastEthernet2<br>
+!<br>
+interface FastEthernet3<br>
+!<br>
+interface FastEthernet4<br>
+ ip address dhcp<br>
+ ip nat outside<br>
+ ip virtual-reassembly<br>
+ duplex auto<br>
+ speed auto<br>
+ crypto map cmevpn<br>
+!<br>
+interface Dot11Radio0<br>
+ no ip address<br>
+ !<br>
+ broadcast-key vlan 1 change 45<br>
+ !<br>
+ !<br>
+ encryption vlan 1 mode ciphers tkip<br>
+ !<br>
+ ssid YOUR_SSID_NAME<br>
+    vlan 1<br>
+    authentication open<br>
+    authentication key-management wpa<br>
+    guest-mode<br>
+    wpa-psk ascii 0 YOUR_SSID_PASSWORD<br>
+ !<br>
+ speed basic-1.0 basic-2.0 basic-5.5 6.0 9.0 basic-11.0 12.0 18.0 24.0 36.0 48.0 54.0<br>
+ station-role root<br>
+ no cdp enable<br>
+!<br>
+interface Dot11Radio0.1<br>
+ encapsulation dot1Q 1 native<br>
+ no cdp enable<br>
+ bridge-group 1<br>
+ bridge-group 1 subscriber-loop-control<br>
+ bridge-group 1 spanning-disabled<br>
+ bridge-group 1 block-unknown-source<br>
+ no bridge-group 1 source-learning<br>
+ no bridge-group 1 unicast-flooding<br>
+!<br>
+interface Vlan1<br>
+ no ip address<br>
+ ip access-group 102 in<br>
+ bridge-group 1<br>
+ bridge-group 1 spanning-disabled<br>
+!<br>
+interface BVI1<br>
+ ip address 10.249.71.1 255.255.255.0<br>
+ ip nat inside<br>
+ ip virtual-reassembly<br>
+!<br>
+ip route 10.249.254.1 255.255.255.255 FastEthernet4<br>
+ip route 69.50.112.0 255.255.255.128 Tunnel0<br>
+ip route 69.50.112.128 255.255.255.128 FastEthernet4<br>
+ip route 69.50.112.254 255.255.255.255 Tunnel0<br>
+!<br>
+!<br>
+no ip http server<br>
+no ip http secure-server<br>
+ip pim rp-address XXX.XXX.XXX.XXX<br>
+ip mroute 69.50.112.0 255.255.255.128 Tunnel0<br>
+ip nat inside source list 1 interface FastEthernet4 overload<br>
+!<br>
 access-list 1 permit 10.249.71.0 0.0.0.255</p>
-</div>
-<div class="paragraph">
-<p>}}}</p>
 </div>
 </div>
 </div>
@@ -377,8 +373,8 @@ access-list 1 permit 10.249.71.0 0.0.0.255</p>
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472927978134"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472927978134"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1472928105196"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1472928105196"></script>
 
 </body>
 </html>
