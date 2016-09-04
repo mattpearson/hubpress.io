@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>CME New Release VPN</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/casper/assets/css/screen.css?v=1473018765056" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
+    <meta name="referrer" content="origin" />
+    
+    <meta property="og:site_name" content="mattpearson blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CME New Release VPN" />
+    <meta property="og:description" content="This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange&amp;#8217;s New Release environment over a self-hosted VPN connection. It&amp;#8217;s meant not to be an in-depth explanation of all terms and concepts, but rather a" />
+    <meta property="og:url" content="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="CME New Release VPN" />
+    <meta name="twitter:description" content="This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange&amp;#8217;s New Release environment over a self-hosted VPN connection. It&amp;#8217;s meant not to be an in-depth explanation of all terms and concepts, but rather a" />
+    <meta name="twitter:url" content="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
+    
+    <script type="application/ld+json">
+null
+    </script>
+
+    <meta name="generator" content="HubPress" />
+    <link rel="alternate" type="application/rss+xml" title="mattpearson blog" href="https://mattpearson.github.io/rss/" />
+</head>
+<body class="post-template nav-closed">
+
+    
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">CME New Release VPN</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-09-03">03 September 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange&#8217;s New Release environment over a self-hosted VPN connection. It&#8217;s meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection for those with only a high level understanding of routers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_1_router">Step 1: Router</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will need a router with built-in ISAKMP and IPSEC capabilities. One of the low cost options is to go with an 800 series Cisco router such as the 871W which you can pick up on Ebay in the $50 to $60 range, and it includes 802.11 wireless capabilities. This guide is written using an 871W router.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here to help get you up to speed.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ISAKMP - This is part of the security mechanism and is a subset of IKE.  <a href="http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp" class="bare">http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp</a></p>
+</li>
+<li>
+<p>GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. <a href="http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html" class="bare">http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html</a></p>
+</li>
+<li>
+<p>PIM - Protocol Independent Multicast. You&#8217;ll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic to work properly.  <a href="http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html" class="bare">http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html</a></p>
+</li>
+<li>
+<p>VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.</p>
+</li>
+<li>
+<p>Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package, not the Advanced Security package despite the need for a VPN tunnel! Make sure you are running a package with the K9 designator because it has AES/3DES encryption.</p>
+</li>
+<li>
+<p>ACL - Access Lists. These allow you to choose what traffic can and can not go through your router.</p>
+</li>
+<li>
+<p>NAT - Network Address Translation. This is a technology that allows your router to create a sub network and, through the use of differing ports, pass the traffic through one (public) IP. "ip nat inside" tells the vlan to NAT ip that are connected to it, and "ip nat outside" tells the interface (you would execute this command on your WAN port) to NAT traffic to the outside world.</p>
+</li>
+<li>
+<p>dot1Q - This is to tell your wireless interface to use a specific vlan. For example "encapsulation dot1Q 10 native" uses vlan 10.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_2_hardware">Step 2: Hardware</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In addition to the 800 series Router, to get started, you&#8217;ll need a so-called "Rollover Cable". <a href="http://www.ebay.com/sch/i.html?_nkw=cisco+rollover+usb&amp;_sacat=0" class="bare">http://www.ebay.com/sch/i.html?_nkw=cisco+rollover+usb&amp;_sacat=0</a>
+This allows you to configure the router over a serial protocol. Use putty to connect, and choose Serial for the method. For my setup, it was COM3 and 9600 baud.
+To connect to CME you&#8217;ll need to have two physical interfaces available on your server. One for public IP traffic, and the other for CME New Release traffic.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_3_the_big_picture">Step 3: The Big Picture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A high level overview of how your network topology can look is as follows. You will have two separate networks (VLANs), one for public internet traffic, and the other specifically for CME NR traffic. The Vlan IDs (10 and 20, below) correspond to the sample configuration at the end.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll create two VLANs, one for public IP traffic ("Vlan 10"), and the other for CME New Release traffic ("Vlan 20"). For wireless router models, you&#8217;ll add the wireless connection to be part of Vlan 10.  Assign two of the fast ethernet ports to vlan 10 (FA0 and FA1), and the other two (FA2 and FA3) to Vlan 20. This will allow you to have two physical connections to public IP and two to New Release. You can always attach a networking switch to a vlan 10 port to expand internet access to other devices.  To have the appropriate IPs assigned to each VLAN, you&#8217;ll create two DHCP pools for which IPs can come. On vlan 10, you can stay with the traditional 192.168.1.x range and on vlan 20, you must use the range that the CME assigns you.</p>
+</div>
+<div class="paragraph">
+<p>Note for Wireless users: In order to get wireless working propertly, you&#8217;ll need to create a both a sub interface and a "bridge group". At a high level, a bridge group allows you to connect the physical interface with the wireless interface into the same group. This is important: you won&#8217;t assign an IP address range to vlan 10, just tell it to be part of the bridge group and with "no ip address". Then, in the bridge group configuration, you will assign the IP range for which the DHCP pool exits. However, for vlan 20 (because it&#8217;s not part of a bridge group with a wireless interface), you will assign an ip range that matches what CME tells you.
+This is evident in the sample configuration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_4_configure_router_cisco_101">Step 4: Configure Router / "Cisco 101"</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To connect to the router, you do not use the Netgear/Linksys approach of pointing your browser to 192.168.1.1. Instead, you need to connect via the serial "rollover" cable.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Once you connect to the router, there will be a few key commands that you&#8217;ll use over and over:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>"write erase"&#8201;&#8212;&#8201;This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router.</p>
+</li>
+<li>
+<p>"copy running-config startup-config"&#8201;&#8212;&#8201;This will copy the configuration that you have created to be the one run when the router is rebooted.</p>
+</li>
+<li>
+<p>"enable"&#8201;&#8212;&#8201;This will bring the router into priviledged mode so you can issue basic show commands.</p>
+</li>
+<li>
+<p>"config t"&#8201;&#8212;&#8201;This will bring the router into global configuration mode where you can actually change settings.</p>
+</li>
+<li>
+<p>"exit"&#8201;&#8212;&#8201;Go back up one "level" in your configuration. For example if you are configuring a sub-interface and want to return back to the interface level, just type exit.</p>
+</li>
+<li>
+<p>"shut"&#8201;&#8212;&#8201;Brings down an interface.</p>
+</li>
+<li>
+<p>"no XXXX"&#8201;&#8212;&#8201;Removes or takes away a command. For example, if you type "no shut", then it will bring UP an interface. Likewise, "no ip pim sparse-mode" will REMOVE the "ip pim sparse-mode" from the configuration.</p>
+</li>
+<li>
+<p>"switchport access"&#8201;&#8212;&#8201;This tells the router to associate a physical interface to a particular vlan.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A couple notes on wifi connection:
+You&#8217;ll notice there exists an entry "interface Dot11Radio0.10". This means you are creating a sub-interface off the 802.11 wireless interface (that&#8217;s where the ".10" comes in). The number after the period is for the vlan number for which the subinterface should be part of. You also use this vlan number with your dot1Q encapulation command. See the sample configuration.
+"guest mode" means that the SSID is broadcast (you&#8217;ll pick it up on your access point list on your laptop/phone).</p>
+</div>
+<div class="paragraph">
+<p>To get started, connect to the router through putty, and follow these instructions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Execute "write erase" first (to restore factory configuration).</p>
+</li>
+<li>
+<p>Next, "enable" to go into priviledged mode.</p>
+</li>
+<li>
+<p>Then, "show running-config" to see what the initial configuration looks like.</p>
+</li>
+<li>
+<p>Lastly, "config t" so you can start changing settings (you should see the '#' prompt which means you can now issue commands).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once you are in this mode, type in the commands from the attached configuration file. Replace the XXX.XXX.XXX.XXX IPs with those provided by CME.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_5_configure_linux">Step 5: Configure Linux</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to get this to work properly, you will need to: 1. diable RP filtering, 2. configure your firewall properly (or just turn it off), and 3. add the appropriate routing table entries so that traffic to CME goes to the correct interface. On the commands that follow, the interface for CME is enp3s0 (change it to match yours).</p>
+</div>
+<div class="paragraph">
+<p>Routing table:
+route add -net 69.50.112.0 netmask 255.255.255.0 gw 10.249.71.1 dev enp3s0</p>
+</div>
+<div class="paragraph">
+<p>To see if multicast traffic is coming in on the interface:
+tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24</p>
+</div>
+<div class="paragraph">
+<p>Note, on Centos 7, the commands to change your interfaces have changed. Here is a helpful cheat-sheet for relevant commands: <a href="https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf" class="bare">https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_useful_links">Useful Links:</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://stevehardie.com/2013/05/cisco-877w-configure-wireless-and-wired-on-single-subnet/" class="bare">http://stevehardie.com/2013/05/cisco-877w-configure-wireless-and-wired-on-single-subnet/</a>
+<a href="https://supportforums.cisco.com/discussion/11801006/does-configuring-two-vlans-cisco-871-router-divides-bandwidth-internet-half" class="bare">https://supportforums.cisco.com/discussion/11801006/does-configuring-two-vlans-cisco-871-router-divides-bandwidth-internet-half</a>
+<a href="https://supportforums.cisco.com/discussion/10567086/change-ip-router-cisco-871" class="bare">https://supportforums.cisco.com/discussion/10567086/change-ip-router-cisco-871</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sample_router_configuration">Sample Router Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Current configuration : 4011 bytes<br>
+!<br>
+version 12.4<br>
+no service pad<br>
+service timestamps debug datetime msec<br>
+service timestamps log datetime msec<br>
+no service password-encryption<br>
+!<br>
+hostname Router<br>
+!<br>
+boot-start-marker<br>
+boot-end-marker<br>
+!<br>
+!<br>
+no aaa new-model<br>
+!<br>
+resource policy<br>
+!<br>
+ip cef<br>
+!<br>
+!<br>
+no ip dhcp use vrf connected<br>
+ip dhcp excluded-address 192.168.1.32 192.168.1.255<br>
+!<br>
+ip dhcp pool vlan20pool<br>
+   network XXX.XXX.XXX.0 255.255.255.0<br>
+   default-router XXX.XXX.XXX.1<br>
+   dns-server 8.8.8.8<br>
+!<br>
+ip dhcp pool vlan10pool<br>
+   network 192.168.1.0 255.255.255.0<br>
+   default-router 192.168.1.1<br>
+   dns-server 8.8.8.8<br>
+!<br>
+!<br>
+ip multicast-routing<br>
+!<br>
+!<br>
+!<br>
+!<br>
+!<br>
+!<br>
+crypto isakmp policy 2<br>
+ encr 3des<br>
+ hash md5<br>
+ authentication pre-share<br>
+crypto isakmp key SECRET_KEY address XXX.XXX.XXX.XXX<br>
+!<br>
+!<br>
+crypto ipsec transform-set cmevpn esp-3des esp-md5-hmac<br>
+!<br>
+crypto map cmevpn 1 ipsec-isakmp<br>
+ set peer XXX.XXX.XXX.XXX<br>
+ set transform-set cmevpn<br>
+ match address 100<br>
+!<br>
+bridge irb<br>
+!<br>
+!<br>
+!<br>
+interface Tunnel0<br>
+ ip address XXX.XXX.XXX.XXX 255.255.255.252<br>
+ ip pim sparse-mode<br>
+ tunnel source XXX.XXX.XXX.XXX<br>
+ tunnel destination XXX.XXX.XXX.1<br>
+!<br>
+interface Loopback0<br>
+ ip address XXX.XXX.XXX.XXX 255.255.255.255<br>
+!<br>
+interface FastEthernet0<br>
+ switchport access vlan 10<br>
+!<br>
+interface FastEthernet1<br>
+ switchport access vlan 10<br>
+!<br>
+interface FastEthernet2<br>
+ switchport access vlan 20<br>
+!<br>
+interface FastEthernet3<br>
+ switchport access vlan 20<br>
+!<br>
+interface FastEthernet4<br>
+ ip address dhcp<br>
+ ip nat outside<br>
+ ip virtual-reassembly<br>
+ duplex auto<br>
+ speed auto<br>
+ crypto map cmevpn<br>
+!<br>
+interface Dot11Radio0<br>
+ no ip address<br>
+ !<br>
+ broadcast-key vlan 10 change 45<br>
+ !<br>
+ !<br>
+ encryption vlan 10 mode ciphers tkip<br>
+ !<br>
+ ssid YOUR_SSID_NETWORK_NAME<br>
+    vlan 10<br>
+    authentication open<br>
+    authentication key-management wpa<br>
+    guest-mode<br>
+    wpa-psk ascii 0 YOUR_SSID_PASSWORD<br>
+ !<br>
+ speed basic-1.0 basic-2.0 basic-5.5 6.0 9.0 basic-11.0 12.0 18.0 24.0 36.0 48.0 54.0<br>
+ station-role root<br>
+ no cdp enable<br>
+!<br>
+interface Dot11Radio0.10<br>
+ encapsulation dot1Q 10 native<br>
+ no cdp enable<br>
+ bridge-group 1<br>
+ bridge-group 1 subscriber-loop-control<br>
+ bridge-group 1 spanning-disabled<br>
+ bridge-group 1 block-unknown-source<br>
+ no bridge-group 1 source-learning<br>
+ no bridge-group 1 unicast-flooding<br>
+!<br>
+interface Vlan1<br>
+ no ip address<br>
+ ip access-group 102 in<br>
+ shutdown<br>
+!<br>
+interface Vlan10<br>
+ no ip address<br>
+ ip access-group 102 in<br>
+ ip nat inside<br>
+ ip virtual-reassembly<br>
+ bridge-group 1<br>
+ bridge-group 1 spanning-disabled<br>
+!<br>
+interface Vlan20<br>
+ ip address XXX.XXX.XXX.1 255.255.255.0<br>
+ ip pim sparse-mode<br>
+ ip nat inside<br>
+ ip virtual-reassembly<br>
+!<br>
+interface BVI1<br>
+ ip address 192.168.1.1 255.255.255.0<br>
+ ip nat inside<br>
+ ip virtual-reassembly<br>
+!<br>
+ip route XXX.XXX.XXX.1 255.255.255.255 FastEthernet4<br>
+ip route XXX.XXX.XXX.0 255.255.255.128 Tunnel0<br>
+ip route XXX.XXX.XXX.128 255.255.255.128 FastEthernet4<br>
+ip route XXX.XXX.XXX.255 255.255.255.255 Tunnel0<br>
+!<br>
+!<br>
+no ip http server<br>
+no ip http secure-server<br>
+ip pim rp-address XXX.XXX.XXX.254<br>
+ip mroute XXX.XXX.XXX.0 255.255.255.128 Tunnel0<br>
+ip nat inside source list 1 interface FastEthernet4 overload<br>
+!<br>
+access-list 1 permit 192.168.1.0 0.0.0.255<br>
+access-list 102 permit ip any any<br>
+!<br>
+!<br>
+!<br>
+!<br>
+control-plane<br>
+!<br>
+bridge 1 protocol ieee<br>
+bridge 1 route ip<br>
+!<br>
+line con 0<br>
+ no modem enable<br>
+line aux 0<br>
+line vty 0 4<br>
+ login<br>
+!<br>
+scheduler max-task-time 5000<br>
+end</p>
+</div>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="https://mattpearson.github.io/author/mattpearson/" style="background-image: url(https://avatars.githubusercontent.com/u/2314787?v&#x3D;3)"><span class="hidden">mattpearson's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="https://mattpearson.github.io/author/mattpearson/">mattpearson</a></h4>
+
+                    <p>Read <a href="https://mattpearson.github.io/author/mattpearson/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=CME%20New%20Release%20VPN&amp;url=https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="https://mattpearson.github.io">mattpearson blog</a> &copy; 2016</section>
+            <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();
+      </script>
+
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/jquery.fitvids.js?v=1473018765056"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/casper/assets/js/index.js?v=1473018765056"></script>
+
+</body>
+</html>
