@@ -1,15 +1,15 @@
 = CME New Release VPN
 
-This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange's New Release environment over a self-hosted VPN connection. It's meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection.
+This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange's New Release environment over a self-hosted VPN connection. It's meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection for those with only a high level understanding of routers.
 
 == Step 1: Router
 
-You will need a router with built-in ISAKMP and IPSEC capabilities. One of the low cost options is to go with an 800 series Cisco router such as the 871W which you can pick up on Ebay for $50 to $60 and it includes wireless capabilities.
+You will need a router with built-in ISAKMP and IPSEC capabilities. One of the low cost options is to go with an 800 series Cisco router such as the 871W which you can pick up on Ebay in the $50 to $60 range, and it includes 802.11 wireless capabilities. This guide is written using an 871W router. 
 
-. For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here.
+. For those readers who are not networking experts or Cisco CCNAs, there are many acronyms that are used. A few of them are briefly explained here to help get you up to speed.
 * ISAKMP - This is part of the security mechanism and is a subset of IKE.  http://networkengineering.stackexchange.com/questions/1/whats-the-difference-between-ike-and-isakmp
 * GRE - Generic Routing Encapsulation. This allows multicast traffic to be sent over the VPN tunnel. http://www.cisco.com/c/en/us/support/docs/ip/ip-multicast/43584-mcast-over-gre.html
-* PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic. http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
+* PIM - Protocol Independent Multicast. You'll need to "enable multicast routing" and "pim sparse-mode" on the router for the multicast traffic to work properly.  http://www.cisco.com/c/en/us/td/docs/ios/solutions_docs/ip_multicast/White_papers/mcst_ovr.html
 * VLAN - Virtual LAN. Note that on the 871W, you can not assign a specific IP or DHCP group to the physical interfaces. You must assign the interfaces to be part of a VLAN and then the VLAN can be assigned a DHCP pool for IP assignment.  
 * Advanced Security or Advanced IP - Cisco offers two flavors of software to run on their routers. The "PIM" capabilities are in the Advanced IP package, not the Advanced Security package despite the need for a VPN tunnel! Make sure you are running a package with the K9 designator because it has AES/3DES encryption.
 * ACL - Access Lists. These allow you to choose what traffic can and can not go through your router.
@@ -21,13 +21,17 @@ In addition to the 800 series Router, to get started, you'll need a so-called "R
 This allows you to configure the router over a serial protocol. Use putty to connect, and choose Serial for the method. For my setup, it was COM3 and 9600 baud.
 To connect to CME you'll need to have two physical interfaces available on your server. One for public IP traffic, and the other for CME New Release traffic. 
 
-== Step 3: Big Picture
-Create two VLANs, one for public IP traffic ("Vlan 10"), and the other for CME New Release traffic ("Vlan 20"). For wireless models, you'll add the wireless connection to be part of Vlan 10.  Assign two of the fast ethernet ports to vlan 10, and the other two to Vlan 20. This will allow you to have two physical connections to public IP and two to New Release. You can always attach a switch to a vlan 10 port to expand access to other devices.  To have the appropriate IPs assigned to each VLAN, you'll create two DHCP pools for which IPs can come. On the vlan 10, you can stay with the traditional 192.168.1.x range and on vlan 20, you must use the range that the CME assigns you. 
+== Step 3: The Big Picture
+A high level overview of how your network topology can look is as follows. You will have two separate networks (VLANs), one for public internet traffic, and the other specifically for CME NR traffic. The Vlan IDs (10 and 20, below) correspond to the sample configuration at the end.
 
-Note for Wireless users: In order to get wireless working propertly, you'll need to create a "bridge group". At a high level, this allows you to bridge the physical interface with the wireless interface into the same group. Note: don't assign an IP address range to vlan 10, just tell it to be part of the bridge group and with "no ip address". Then, in the bridge group configuration, you will assign the IP range for which the DHCP pool exits. However, for vlan 20 (because it's not part of a bridge group with a wireless interface), you will assign an ip range that matches what CME tells you. 
+You'll create two VLANs, one for public IP traffic ("Vlan 10"), and the other for CME New Release traffic ("Vlan 20"). For wireless router models, you'll add the wireless connection to be part of Vlan 10.  Assign two of the fast ethernet ports to vlan 10 (FA0 and FA1), and the other two (FA2 and FA3) to Vlan 20. This will allow you to have two physical connections to public IP and two to New Release. You can always attach a networking switch to a vlan 10 port to expand internet access to other devices.  To have the appropriate IPs assigned to each VLAN, you'll create two DHCP pools for which IPs can come. On vlan 10, you can stay with the traditional 192.168.1.x range and on vlan 20, you must use the range that the CME assigns you. 
 
+Note for Wireless users: In order to get wireless working propertly, you'll need to create a both a sub interface and a "bridge group". At a high level, a bridge group allows you to connect the physical interface with the wireless interface into the same group. This is important: you won't assign an IP address range to vlan 10, just tell it to be part of the bridge group and with "no ip address". Then, in the bridge group configuration, you will assign the IP range for which the DHCP pool exits. However, for vlan 20 (because it's not part of a bridge group with a wireless interface), you will assign an ip range that matches what CME tells you. 
+This is evident in the sample configuration. 
 
-== Step 4: Configure Router
+== Step 4: Configure Router / "Cisco 101"
+
+To connect to the router, you do not use the Netgear/Linksys approach of pointing your browser to 192.168.1.1. Instead, you need to connect via the serial "rollover" cable.
 
 . Once you connect to the router, there will be a few key commands that you'll use over and over:
 * "write erase" -- This will erase the "running-config" and the "startup-config". These are the file names of the two configuration files on the router. 
@@ -37,13 +41,20 @@ Note for Wireless users: In order to get wireless working propertly, you'll need
 * "exit" -- Go back up one "level" in your configuration. For example if you are configuring a sub-interface and want to return back to the interface level, just type exit.
 * "shut" -- Brings down an interface.
 * "no XXXX" -- Removes or takes away a command. For example, if you type "no shut", then it will bring UP an interface. Likewise, "no ip pim sparse-mode" will REMOVE the "ip pim sparse-mode" from the configuration. 
+* "switchport access" -- This tells the router to associate a physical interface to a particular vlan.
+
+A couple notes on wifi connection:
+You'll notice there exists an entry "interface Dot11Radio0.10". This means you are creating a sub-interface off the 802.11 wireless interface (that's where the ".10" comes in). The number after the period is for the vlan number for which the subinterface should be part of. You also use this vlan number with your dot1Q encapulation command. See the sample configuration.  
+"guest mode" means that the SSID is broadcast (you'll pick it up on your access point list on your laptop/phone).
+
+To get started, connect to the router through putty, and follow these instructions:
 
 . Execute "write erase" first (to restore factory configuration).
-* Next, "enable" to go into priviledged mode.
-* Then, "show running-config" to see what the initial configuration looks like. 
-* Lastly, "config t" so you can start changing settings (you should see the '#' prompt which means you can now issue commands).
+. Next, "enable" to go into priviledged mode.
+. Then, "show running-config" to see what the initial configuration looks like. 
+. Lastly, "config t" so you can start changing settings (you should see the '#' prompt which means you can now issue commands).
 
-Once you are in this mode, type in the commands from the attached configuration file.
+Once you are in this mode, type in the commands from the attached configuration file. Replace the XXX.XXX.XXX.XXX IPs with those provided by CME.
 
 == Step 5: Configure Linux
 
@@ -55,6 +66,7 @@ route add -net 69.50.112.0 netmask 255.255.255.0 gw 10.249.71.1 dev enp3s0
 To see if multicast traffic is coming in on the interface:
 tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24
 
+Note, on Centos 7, the commands to change your interfaces have changed. Here is a helpful cheat-sheet for relevant commands: https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf
 
 == Useful Links:
 http://stevehardie.com/2013/05/cisco-877w-configure-wireless-and-wired-on-single-subnet/
@@ -65,6 +77,8 @@ https://supportforums.cisco.com/discussion/10567086/change-ip-router-cisco-871
 
 [%hardbreaks]
 
+Current configuration : 4011 bytes
+!
 version 12.4
 no service pad
 service timestamps debug datetime msec
@@ -85,11 +99,16 @@ ip cef
 !
 !
 no ip dhcp use vrf connected
-ip dhcp excluded-address 10.249.71.64 10.249.71.255
+ip dhcp excluded-address 192.168.1.32 192.168.1.255
 !
-ip dhcp pool vlan1pool
-   network 10.249.71.0 255.255.255.0
-   default-router 10.249.71.1
+ip dhcp pool vlan20pool
+   network XXX.XXX.XXX.0 255.255.255.0
+   default-router XXX.XXX.XXX.1
+   dns-server 8.8.8.8
+!
+ip dhcp pool vlan10pool
+   network 192.168.1.0 255.255.255.0
+   default-router 192.168.1.1
    dns-server 8.8.8.8
 !
 !
@@ -104,7 +123,7 @@ crypto isakmp policy 2
  encr 3des
  hash md5
  authentication pre-share
-crypto isakmp key XXXXXXXXXXXXXXXXXXXXX
+crypto isakmp key SECRET_KEY address XXX.XXX.XXX.XXX
 !
 !
 crypto ipsec transform-set cmevpn esp-3des esp-md5-hmac
@@ -122,18 +141,22 @@ interface Tunnel0
  ip address XXX.XXX.XXX.XXX 255.255.255.252
  ip pim sparse-mode
  tunnel source XXX.XXX.XXX.XXX
- tunnel destination XXX.XXX.XXX.XXX
+ tunnel destination XXX.XXX.XXX.1
 !
 interface Loopback0
- ip address 10.249.0.229 255.255.255.255
+ ip address XXX.XXX.XXX.XXX 255.255.255.255
 !
 interface FastEthernet0
+ switchport access vlan 10
 !
 interface FastEthernet1
+ switchport access vlan 10
 !
 interface FastEthernet2
+ switchport access vlan 20
 !
 interface FastEthernet3
+ switchport access vlan 20
 !
 interface FastEthernet4
  ip address dhcp
@@ -146,13 +169,13 @@ interface FastEthernet4
 interface Dot11Radio0
  no ip address
  !
- broadcast-key vlan 1 change 45
+ broadcast-key vlan 10 change 45
  !
  !
- encryption vlan 1 mode ciphers tkip
+ encryption vlan 10 mode ciphers tkip
  !
- ssid YOUR_SSID_NAME
-    vlan 1
+ ssid YOUR_SSID_NETWORK_NAME
+    vlan 10
     authentication open
     authentication key-management wpa
     guest-mode
@@ -162,8 +185,8 @@ interface Dot11Radio0
  station-role root
  no cdp enable
 !
-interface Dot11Radio0.1
- encapsulation dot1Q 1 native
+interface Dot11Radio0.10
+ encapsulation dot1Q 10 native
  no cdp enable
  bridge-group 1
  bridge-group 1 subscriber-loop-control
@@ -175,26 +198,55 @@ interface Dot11Radio0.1
 interface Vlan1
  no ip address
  ip access-group 102 in
+ shutdown
+!
+interface Vlan10
+ no ip address
+ ip access-group 102 in
+ ip nat inside
+ ip virtual-reassembly
  bridge-group 1
  bridge-group 1 spanning-disabled
 !
-interface BVI1
- ip address 10.249.71.1 255.255.255.0
+interface Vlan20
+ ip address XXX.XXX.XXX.1 255.255.255.0
+ ip pim sparse-mode
  ip nat inside
  ip virtual-reassembly
 !
-ip route 10.249.254.1 255.255.255.255 FastEthernet4
-ip route 69.50.112.0 255.255.255.128 Tunnel0
-ip route 69.50.112.128 255.255.255.128 FastEthernet4
-ip route 69.50.112.254 255.255.255.255 Tunnel0
+interface BVI1
+ ip address 192.168.1.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+ip route XXX.XXX.XXX.1 255.255.255.255 FastEthernet4
+ip route XXX.XXX.XXX.0 255.255.255.128 Tunnel0
+ip route XXX.XXX.XXX.128 255.255.255.128 FastEthernet4
+ip route XXX.XXX.XXX.255 255.255.255.255 Tunnel0
 !
 !
 no ip http server
 no ip http secure-server
-ip pim rp-address XXX.XXX.XXX.XXX
-ip mroute 69.50.112.0 255.255.255.128 Tunnel0
+ip pim rp-address XXX.XXX.XXX.254
+ip mroute XXX.XXX.XXX.0 255.255.255.128 Tunnel0
 ip nat inside source list 1 interface FastEthernet4 overload
 !
-access-list 1 permit 10.249.71.0 0.0.0.255
-
-
+access-list 1 permit 192.168.1.0 0.0.0.255
+access-list 102 permit ip any any
+!
+!
+!
+!
+control-plane
+!
+bridge 1 protocol ieee
+bridge 1 route ip
+!
+line con 0
+ no modem enable
+line aux 0
+line vty 0 4
+ login
+!
+scheduler max-task-time 5000
+end
