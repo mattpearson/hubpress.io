@@ -61,7 +61,8 @@ Once you are in this mode, type in the commands from the attached configuration 
 In order to get this to work properly, you will need to: 1. diable RP filtering, 2. configure your firewall properly (or just turn it off), and 3. add the appropriate routing table entries so that traffic to CME goes to the correct interface. On the commands that follow, the interface for CME is enp3s0 (change it to match yours).
 
 Routing table:
-route add -net 69.50.112.0 netmask 255.255.255.0 gw 10.249.71.1 dev enp3s0
+route add -net XXX.YYY.ZZZ.0 netmask 255.255.255.0 gw AAA.BBB.CCC.1 dev enp3s0
+(Change the X,Y,Z, and A,B,C to the IP range assignedby CME).
 
 To see if multicast traffic is coming in on the interface:
 tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24
