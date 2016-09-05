@@ -1,9 +1,12 @@
 = Linux Security
 
-There are a few things one should change to make a new centos installation more secure. They include:
+What should be the first thing you do with a new linux installation? Make it more secure! They include:
 
 . Disable root login from sshd
 . Allow authentication only through pre-configured ssh keys.
+. Install fail2ban
+
+== sshd changes
 
 First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change 
 
@@ -32,3 +35,8 @@ Wrap up these changes with a sshd restart:
 sudo service sshd restart
 ....
 
+== fail2ban 
+
+Fail2ban is a service that modifies your iptables rules based on activity that is seen in your log files. If someone attempts to repeatedly log in with incorrect credentials, you can choose to have their IP banned from connecting again for a period of time. A good how-to guide for installing and configuring fail2ban is here:
+
+https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-centos-7
