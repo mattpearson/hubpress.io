@@ -1,4 +1,70 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 04 Sep 2016 20:55:25 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[CME New Release VPN]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 05 Sep 2016 15:06:48 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Linux Security]]></title><description><![CDATA[<div class="paragraph">
+<p>There are a few things one should change to make a new centos installation more secure. They are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Disable root login from sshd</p>
+</li>
+<li>
+<p>Allow authentication only through pre-configured ssh keys.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#PermitRootLogin yes
+#AuthorizedKeysFile      .ssh/.authorized_keys</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PermitRootLogin no
+AuthorizedKeysFile      .ssh/.authorized_keys</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, generate a ssh key on your local computer for authentication. There are plenty of how-to guides to do this (such as <a href="https://devops.profitbricks.com/tutorials/use-ssh-keys-with-putty-on-windows/" class="bare">https://devops.profitbricks.com/tutorials/use-ssh-keys-with-putty-on-windows/</a>  for Windows and <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2" class="bare">https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2</a> for linux) but the essence is as follows for Windows users:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download PuTTYgen and generate a key.</p>
+</li>
+<li>
+<p>For "key comment", enter your username</p>
+</li>
+<li>
+<p>For "key passphrase", you can enter a passphrase for extra security if wanted.</p>
+</li>
+<li>
+<p>click "Save private key" and note location and filename.</p>
+</li>
+<li>
+<p>In PuTTY, create a new session, and go to Connection&#8594;SSH&#8594;Auth&#8594;Browse and choose your private key.  Save this session with the IP address.</p>
+</li>
+<li>
+<p>On your linux box, edit ~/.ssh/.authorized_keys and paste in the content stored in PuTTYgen section titled "Public key for pasting into OpenSSH authorized_keys file". Make sure you copy ALL of it, including the beginning "ssh-rsa" text, AND the ending text after the "==" symbols.</p>
+</li>
+<li>
+<p>Confirm the .authorized_keys file is mode 600 (chmod 600 .authorized_keys).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Wrap up these changes with a sshd restart:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo service sshd restart</pre>
+</div>
+</div>]]></description><link>https://mattpearson.github.io/2016/09/05/Linux-Security.html</link><guid isPermaLink="true">https://mattpearson.github.io/2016/09/05/Linux-Security.html</guid><pubDate>Mon, 05 Sep 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[CME New Release VPN]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide is written to help others go through the process of configuring a system to connect to the Chicago Mercantile Exchange&#8217;s New Release environment over a self-hosted VPN connection. It&#8217;s meant not to be an in-depth explanation of all terms and concepts, but rather a guide/map to go from a new router to having a working connection for those with only a high level understanding of routers.</p>
