@@ -6,3 +6,28 @@ There are a few things one should change to make a new centos installation more 
 . Allow authentication only through pre-configured ssh keys.
 
 First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change 
+
+....
+#PermitRootLogin yes
+#AuthorizedKeysFile      .ssh/.authorized_keys
+....
+to
+....
+PermitRootLogin no
+AuthorizedKeysFile      .ssh/.authorized_keys
+....
+
+Next, generate a ssh key on your local computer for authentication. There are plenty of how-to guides to do this (such as https://devops.profitbricks.com/tutorials/use-ssh-keys-with-putty-on-windows/) but the essence is as follows:
+. Download PuTTYgen and generate a key.
+. For "key comment", enter your username
+. For "key passphrase", you can enter a passphrase for extra security if wanted.
+. click "Save private key" and note location and filename.
+. In PuTTY, create a new session, and go to Connection->SSH->Auth->Browse and choose your private key.  Save this session with the IP address.
+. On your linux box, edit ~/.ssh/.authorized_keys and paste in the content stored in PuTTYgen section titled "Public key for pasting into OpenSSH authorized_keys file". Make sure you copy ALL of it, including the beginning "ssh-rsa" text, AND the ending text after the "==" symbols. 
+. Confirm the .authorized_keys file is mode 600 (chmod 600 .authorized_keys).
+
+Wrap up these changes with a sshd restart:
+....
+sudo service sshd restart
+....
+
