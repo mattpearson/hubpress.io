@@ -1,0 +1,8 @@
+= Linux Security
+
+There are a few things one should change to make a new centos installation more secure. They are:
+
+. Disable root login from sshd
+. Allow authentication only through pre-configured ssh keys.
+
+First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change 
