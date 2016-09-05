@@ -17,7 +17,8 @@ PermitRootLogin no
 AuthorizedKeysFile      .ssh/.authorized_keys
 ....
 
-Next, generate a ssh key on your local computer for authentication. There are plenty of how-to guides to do this (such as https://devops.profitbricks.com/tutorials/use-ssh-keys-with-putty-on-windows/) but the essence is as follows:
+Next, generate a ssh key on your local computer for authentication. There are plenty of how-to guides to do this (such as https://devops.profitbricks.com/tutorials/use-ssh-keys-with-putty-on-windows/  for Windows and https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2 for linux) but the essence is as follows for Windows users:
+
 . Download PuTTYgen and generate a key.
 . For "key comment", enter your username
 . For "key passphrase", you can enter a passphrase for extra security if wanted.
