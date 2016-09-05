@@ -12,17 +12,17 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/fastclick.js?v=1473088124441"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/modernizr.js?v=1473088124441"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/fastclick.js?v=1473088433772"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/modernizr.js?v=1473088433772"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/normalize.css?v=1473088124441" />
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/foundation.min.css?v=1473088124441" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/normalize.css?v=1473088433772" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/foundation.min.css?v=1473088433772" />
     <!--[if lte IE 8]>
-        <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/outdatedBrowser.min.css?v=1473088124441">
+        <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/outdatedBrowser.min.css?v=1473088433772">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/fonts/foundation-icons/foundation-icons.css?v=1473088124441" />
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/styles.css?v=1473088124441" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/fonts/foundation-icons/foundation-icons.css?v=1473088433772" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/styles.css?v=1473088433772" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,700,400|Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/05/Linux-Security.html" />
@@ -31,11 +31,11 @@
     <meta property="og:site_name" content="mattpearson blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Linux Security" />
-    <meta property="og:description" content="There are a few things one should change to make a new centos installation more secure. They include: Disable root login from sshd Allow authentication only through pre-configured ssh keys. First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change #PermitRootLogin yes #AuthorizedKeysFile      .ssh/.authorized_keys" />
+    <meta property="og:description" content="What should be the first thing you do with a new linux installation? Make it more secure! They include: Disable root login from sshd Allow authentication only through pre-configured ssh keys. Install fail2ban sshd changes First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change #PermitRootLogin" />
     <meta property="og:url" content="https://mattpearson.github.io/2016/09/05/Linux-Security.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Linux Security" />
-    <meta name="twitter:description" content="There are a few things one should change to make a new centos installation more secure. They include: Disable root login from sshd Allow authentication only through pre-configured ssh keys. First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change #PermitRootLogin yes #AuthorizedKeysFile      .ssh/.authorized_keys" />
+    <meta name="twitter:description" content="What should be the first thing you do with a new linux installation? Make it more secure! They include: Disable root login from sshd Allow authentication only through pre-configured ssh keys. Install fail2ban sshd changes First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change #PermitRootLogin" />
     <meta name="twitter:url" content="https://mattpearson.github.io/2016/09/05/Linux-Security.html" />
     
     <script type="application/ld+json">
@@ -122,8 +122,10 @@ null
             <span class="post-meta label"><time datetime="2016-09-05">05 Sep 2016</time></span>
 
             <section class="post-content">
-                <div class="paragraph">
-<p>There are a few things one should change to make a new centos installation more secure. They include:</p>
+                <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>What should be the first thing you do with a new linux installation? Make it more secure! They include:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -133,8 +135,16 @@ null
 <li>
 <p>Allow authentication only through pre-configured ssh keys.</p>
 </li>
+<li>
+<p>Install fail2ban</p>
+</li>
 </ol>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sshd_changes">sshd changes</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>First, edit /etc/ssh/sshd_config  (sudo vi /etc/ssh/sshd_config), and change</p>
 </div>
@@ -187,6 +197,19 @@ AuthorizedKeysFile      .ssh/.authorized_keys</pre>
 <div class="literalblock">
 <div class="content">
 <pre>sudo service sshd restart</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fail2ban">fail2ban</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fail2ban is a service that modifies your iptables rules based on activity that is seen in your log files. If someone attempts to repeatedly log in with incorrect credentials, you can choose to have their IP banned from connecting again for a period of time. A good how-to guide for installing and configuring fail2ban is here:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-centos-7" class="bare">https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-centos-7</a></p>
+</div>
 </div>
 </div>
                         <aside class="tags fi-pricetag-multiple">No tag</aside>
@@ -254,9 +277,9 @@ AuthorizedKeysFile      .ssh/.authorized_keys</pre>
       </script>
 
     <!--[if lte IE 8]>
-        <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/outdatedBrowser.min.js?v=1473088124441"></script>
+        <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/outdatedBrowser.min.js?v=1473088433772"></script>
     <![endif]-->
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/min/built.js?v=1473088124441"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/min/built.js?v=1473088433772"></script>
 
     <script>
       $(document).foundation();
