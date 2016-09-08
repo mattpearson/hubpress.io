@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Mon, 05 Sep 2016 15:14:10 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Linux Security]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Thu, 08 Sep 2016 16:10:46 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Linux Security]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>What should be the first thing you do with a new linux installation? Make it more secure! They include:</p>
@@ -242,6 +242,10 @@ You&#8217;ll notice there exists an entry "interface Dot11Radio0.10". This means
 <p>Routing table:
 route add -net XXX.YYY.ZZZ.0 netmask 255.255.255.0 gw AAA.BBB.CCC.1 dev enp3s0
 (Change the X,Y,Z, and A,B,C to the IP range assignedby CME).</p>
+</div>
+<div class="paragraph">
+<p>Also add the route for multicast traffic to the appropriate interface:
+sudo route add -net 224.0.0.0/8 dev enp3s0</p>
 </div>
 <div class="paragraph">
 <p>To see if multicast traffic is coming in on the interface:
