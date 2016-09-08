@@ -64,6 +64,9 @@ Routing table:
 route add -net XXX.YYY.ZZZ.0 netmask 255.255.255.0 gw AAA.BBB.CCC.1 dev enp3s0
 (Change the X,Y,Z, and A,B,C to the IP range assignedby CME).
 
+Also add the route for multicast traffic to the appropriate interface:
+sudo route add -net 224.0.0.0/8 dev enp3s0
+
 To see if multicast traffic is coming in on the interface:
 tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24
 
