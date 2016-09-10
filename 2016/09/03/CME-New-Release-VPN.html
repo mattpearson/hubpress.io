@@ -12,17 +12,17 @@
 
     <link rel="shortcut icon" href="https://mattpearson.github.io/favicon.ico">
 
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/fastclick.js?v=1473351046587"></script>
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/modernizr.js?v=1473351046587"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/fastclick.js?v=1473478703026"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/vendor/modernizr.js?v=1473478703026"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/normalize.css?v=1473351046587" />
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/foundation.min.css?v=1473351046587" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/normalize.css?v=1473478703026" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/foundation.min.css?v=1473478703026" />
     <!--[if lte IE 8]>
-        <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/outdatedBrowser.min.css?v=1473351046587">
+        <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/outdatedBrowser.min.css?v=1473478703026">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/fonts/foundation-icons/foundation-icons.css?v=1473351046587" />
-    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/styles.css?v=1473351046587" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/fonts/foundation-icons/foundation-icons.css?v=1473478703026" />
+    <link rel="stylesheet" type="text/css" href="//mattpearson.github.io/themes/ichi/assets/css/styles.css?v=1473478703026" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,700,400|Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" />
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/09/03/CME-New-Release-VPN.html" />
@@ -281,6 +281,9 @@ route add -net XXX.YYY.ZZZ.0 netmask 255.255.255.0 gw AAA.BBB.CCC.1 dev enp3s0
 <div class="paragraph">
 <p>Also add the route for multicast traffic to the appropriate interface:
 sudo route add -net 224.0.0.0/8 dev enp3s0</p>
+</div>
+<div class="paragraph">
+<p>To join a multicast group on ip 224.0.28.1:14310, you can use the command: iperf -s -u -B 224.0.28.1 -i 1 -p 14310</p>
 </div>
 <div class="paragraph">
 <p>To see if multicast traffic is coming in on the interface:
@@ -546,9 +549,9 @@ end</p>
       </script>
 
     <!--[if lte IE 8]>
-        <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/outdatedBrowser.min.js?v=1473351046587"></script>
+        <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/outdatedBrowser.min.js?v=1473478703026"></script>
     <![endif]-->
-    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/min/built.js?v=1473351046587"></script>
+    <script type="text/javascript" src="//mattpearson.github.io/themes/ichi/assets/js/min/built.js?v=1473478703026"></script>
 
     <script>
       $(document).foundation();
