@@ -67,6 +67,8 @@ route add -net XXX.YYY.ZZZ.0 netmask 255.255.255.0 gw AAA.BBB.CCC.1 dev enp3s0
 Also add the route for multicast traffic to the appropriate interface:
 sudo route add -net 224.0.0.0/8 dev enp3s0
 
+To join a multicast group on ip 224.0.28.1:14310, you can use the command: iperf -s -u -B 224.0.28.1 -i 1 -p 14310
+
 To see if multicast traffic is coming in on the interface:
 tcpdump -i enp3s0 -s0 -vv net 224.0.28.0/24
 
