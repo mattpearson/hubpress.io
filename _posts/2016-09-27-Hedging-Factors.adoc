@@ -6,7 +6,7 @@ The CAPM suggests that a firm's expected excess return (Ri) above the risk-free 
 
 ( Ri - Rf ) = alpha + beta * ( Rm - Rf ).
 
-Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors. Cliff Asness eloquently  https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way[describes them] as follows:
+Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors beyond size and value. Cliff Asness eloquently  https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way[describes them] as follows:
 
 . Premium Factors
 * RM-RF - The return spread between the capitalization weighted stock market and cash.
@@ -23,28 +23,32 @@ By re-expressing the CAPM to use the additional risk factors, the regression can
 
 ( Ri - Rf ) = alpha + beta1 * ( Rm - Rf ) + beta2 * HML + beta3 * SMB + beta4 * RWM + beta5 * CMA
 
-One of the most famous portfolio managers of the 20th century is Peter Lynch, who was the PM for Fidelity's Magellan Fund. How were his factor exposures during the time he was managing, from 1977 to 1980?
+Ken French maintains a library of factors for doing exactly these kinds of regressions. You can access it http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html[here].
+
+One of the most famous portfolio managers of the 20th century is Peter Lynch, who was the PM for Fidelity's Magellan Fund. What were his factor exposures during the time he was managing the fund, from 1977 to 1990?
 
 The regression results follow:
 
 image::magellan_fivefactors.PNG[]
 
-Obviously, his fund had a statistically strong positive relationship with the market (MKT-RF), and a strong negative relationship with HML and RMW. The negative relationship with HML suggests he was exposed to more growth stocks than value stocks, and firms that were least profitable than most profitable. Given the small t-statistics to SMB and CMA we can not make statistically significant conclusions as to these risk factors.
+Obviously, his fund had a statistically strong positive relationship with the market (MKT-RF), and clearly a statistically strong negative relationship with HML and RMW factors. The negative relationship with HML suggests he was exposed to more growth stocks than value stocks, and firms that were least profitable rather than most profitable. Given the small t-statistics to SMB and CMA we can not make statistically significant conclusions as to his portfolio's exposures to these risk factors. 
+
+Remember when you are running such regressions, subtract out the risk free rate from the returns of the market and the security or fund you are analyzing. While the current ZIRP regime we're currently in won't make much of a difference, when you go back to the 80s and 90s it definitely will.
 
 ==== How to hedge?
 
-The analysis above, the risk factors are not tradable. Recently, however, there has been a large increase in the number of exchange traded funds that provide factor eposure. If you, as an investor in the Magellan fund, wanted to hedge the exposure to growth stocks (HML factor), you can simply buy $0.30 worth of a fund that tracks HML for each $1.00 that is invested in Magellan:
+The analysis above, the risk factors are not tradable. Within the past few years, however, there has been a large increase in the number of exchange traded funds that provide factor exposure. If you, as an investor in the Magellan fund, wanted to hedge the exposure to growth stocks (HML factor), you can simply buy $0.30 worth of a fund that tracks HML for each $1.00 that is invested in Magellan:
 
 image::magellan_fivefactors_hedge.PNG[]
 
-After running the same regression, you can now see that the coefficient and t-statistic for the HML factor are effectively zero. In practice, use an ETF that is both easily shortable with low short-rate fee to achieve this exposure.
+After running the same regression, you can now see that the coefficient and t-statistic for the HML factor are effectively zero. In practice, use an ETF that is both easily shortable with low short-rate fee to achieve the best results.
 
 ==== Python Code
 
-This code is adapted from the solid work by https://github.com/nakulnayyar/FF3Factor[nakulnayyar].
+This code is adapted from the solid work by https://github.com/nakulnayyar/FF3Factor[nakulnayyar]. It has been changed to use the new five factor model, and show an example of hedging. 
 
-[%hardbreaks]
-
+[source,python]
+-------------------
 import pandas as pd
 import numpy as np
 from StringIO import StringIO
@@ -52,7 +56,6 @@ from zipfile import ZipFile
 from urllib import urlopen
 import pandas.io.data as web
 import statsmodels.api as sm
-
 url = urlopen("http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip")
 zipfile = ZipFile(StringIO(url.read()))
 FFdata = pd.read_csv(zipfile.open('F-F_Research_Data_5_Factors_2x3.CSV'), 
@@ -113,8 +116,7 @@ results = model.fit()
 print(results.summary())
 
 
-
-
+-------------------
 
 
 
