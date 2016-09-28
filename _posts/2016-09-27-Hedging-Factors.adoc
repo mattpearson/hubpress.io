@@ -1,0 +1,11 @@
+= Hedging Factors
+
+== Review
+
+The CAPM suggests that a firm's expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. In other words:  ( Ri - Rf ) = scaling factor * ( Rm - Rf ). Put differently,
+
+( Ri - Rf ) = alpha + beta * ( Rm - Rf ).
+
+Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). 
+
+image::magellan_fivefactors.PNG[]
