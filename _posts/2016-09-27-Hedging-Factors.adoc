@@ -61,7 +61,7 @@ FFdata = pd.read_csv(zipfile.open('F-F_Research_Data_5_Factors_2x3.CSV'),
 
 FFdata = FFdata[:638]
 
-#Convert YYYYMM into Date
+//#Convert YYYYMM into Date
 FFdata['Date'] = pd.to_datetime(FFdata['Date'], format = "%Y%m")
 FFdata.index = FFdata['Date']
 FFdata.drop(FFdata.columns[0], axis=1,inplace=True)
@@ -105,7 +105,7 @@ print(results.summary())
 
 y.plot()
 
-# Hedge HML
+#Hedge HML
 y1 = y - results.params[3] * df['HML']
 
 model = sm.OLS(y1, X)
@@ -114,8 +114,6 @@ print(results.summary())
 
 
 
-
-[%hardbreaks]
 
 
 
