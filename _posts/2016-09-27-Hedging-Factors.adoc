@@ -6,6 +6,16 @@ The CAPM suggests that a firm's expected excess return (Ri) above the risk-free 
 
 ( Ri - Rf ) = alpha + beta * ( Rm - Rf ).
 
-Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors. Cliff Asness eloquently <a href="https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way">describes them</a> here:
+Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors. Cliff Asness eloquently  https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way[describes them] as follows:
+
+. Premium Factors
+* RM-RF 	The return spread between the capitalization weighted stock market and cash.
+* SMB	     The return spread of small minus large stocks (i.e., the size effect).
+* HML	     The return spread of cheap minus expensive stocks (i.e., the value effect).
+* RMW	    The return spread of the most profitable firms minus the least profitable.
+* CMA	     The return spread of firms that invest conservatively minus aggressively.
+
+abc
+
 
 image::magellan_fivefactors.PNG[]
