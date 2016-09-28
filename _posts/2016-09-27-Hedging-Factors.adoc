@@ -39,6 +39,82 @@ image::magellan_fivefactors_hedge.PNG[]
 
 After running the same regression, you can now see that the coefficient and t-statistic for the HML factor are effectively zero. In practice, use an ETF that is both easily shortable with low short-rate fee to achieve this exposure.
 
+==== Python Code
+
+This code is adapted from the solid work by https://github.com/nakulnayyar/FF3Factor[nakulnayyar].
+
+
+import pandas as pd
+import numpy as np
+from StringIO import StringIO
+from zipfile import ZipFile
+from urllib import urlopen
+import pandas.io.data as web
+import statsmodels.api as sm
+
+url = urlopen("http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip")
+zipfile = ZipFile(StringIO(url.read()))
+FFdata = pd.read_csv(zipfile.open('F-F_Research_Data_5_Factors_2x3.CSV'), 
+                     header = 0, names = ['Date','MKT-RF','SMB','HML','RMW','CMA','RF'], 
+                     skiprows=3)
+
+FFdata = FFdata[:638]
+
+#Convert YYYYMM into Date
+FFdata['Date'] = pd.to_datetime(FFdata['Date'], format = "%Y%m")
+FFdata.index = FFdata['Date']
+FFdata.drop(FFdata.columns[0], axis=1,inplace=True)
+
+#Drop Days in YYYY-MM-DD
+FFdata.index = FFdata.index.map(lambda x: x.strftime('%Y-%m'))
+
+#Convert into float
+FFdata = FFdata.astype('float')
+FFdata.tail()
+
+#Get Data from Yahoo
+start = datetime(1980,1,1)
+end = datetime(1990,10,1)
+f = web.get_data_yahoo("FMAGX", start, end, interval='m')
+
+#Delete Columns
+f.drop(f.columns[[0,1,2,3,4]], axis=1, inplace=True)
+#Fix Date Column
+f.index = f.index.map(lambda x: x.strftime('%Y-%m'))
+
+f['Return'] = f['Adj Close'].pct_change().shift(0) * 100.0
+f.head()
+
+
+
+data2 = pd.concat([f,FFdata], axis = 1)
+data2['XRtrn'] = (data2['Return'] - data2['RF'])
+df = data2[np.isfinite(data2['XRtrn'])]
+df.tail()
+
+
+y = df['XRtrn']
+
+
+X = df.ix[:,[2,3,4,5,6]]
+X = sm.add_constant(X)
+model = sm.OLS(y, X)
+results = model.fit()
+print(results.summary())
+
+y.plot()
+
+# Hedge HML
+y1 = y - results.params[3] * df['HML']
+
+model = sm.OLS(y1, X)
+results = model.fit()
+print(results.summary())
+
+
+
+
+[%hardbreaks]
 
 
 
