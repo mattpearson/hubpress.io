@@ -43,6 +43,7 @@ After running the same regression, you can now see that the coefficient and t-st
 
 This code is adapted from the solid work by https://github.com/nakulnayyar/FF3Factor[nakulnayyar].
 
+[%hardbreaks]
 
 import pandas as pd
 import numpy as np
