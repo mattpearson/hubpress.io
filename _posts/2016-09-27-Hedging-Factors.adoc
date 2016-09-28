@@ -1,21 +1,47 @@
 = Hedging Factors
 
-== Review
+==== Review
 
-The CAPM suggests that a firm's expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. In other words:  ( Ri - Rf ) = scaling factor * ( Rm - Rf ). Put differently,
+The CAPM suggests that a firm's expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. Risk-free rate can be the rate of return on US treasury bonds. In other words:  ( Ri - Rf ) = scaling factor * ( Rm - Rf ). Put differently,
 
 ( Ri - Rf ) = alpha + beta * ( Rm - Rf ).
 
 Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors. Cliff Asness eloquently  https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way[describes them] as follows:
 
 . Premium Factors
-* RM-RF 	The return spread between the capitalization weighted stock market and cash.
-* SMB	     The return spread of small minus large stocks (i.e., the size effect).
-* HML	     The return spread of cheap minus expensive stocks (i.e., the value effect).
-* RMW	    The return spread of the most profitable firms minus the least profitable.
-* CMA	     The return spread of firms that invest conservatively minus aggressively.
+* RM-RF - The return spread between the capitalization weighted stock market and cash.
+* SMB - The return spread of small minus large stocks (i.e., the size effect).
+* HML - The return spread of cheap minus expensive stocks (i.e., the value effect).
+* RMW - The return spread of the most profitable firms minus the least profitable.
+* CMA - The return spread of firms that invest conservatively minus aggressively.
 
-abc
+With this knowledge, how can you evaluate the exposure a portfolio has to these risk factors?
 
+==== Regression
+
+By re-expressing the CAPM to use the additional risk factors, the regression can be expressed as:
+
+( Ri - Rf ) = alpha + beta1 * ( Rm - Rf ) + beta2 * HML + beta3 * SMB + beta4 * RWM + beta5 * CMA
+
+One of the most famous portfolio managers of the 20th century is Peter Lynch, who was the PM for Fidelity's Magellan Fund. How were his factor exposures during the time he was managing, from 1977 to 1980?
+
+The regression results follow:
 
 image::magellan_fivefactors.PNG[]
+
+Obviously, his fund had a statistically strong positive relationship with the market (MKT-RF), and a strong negative relationship with HML and RMW. The negative relationship with HML suggests he was exposed to more growth stocks than value stocks, and firms that were least profitable than most profitable. Given the small t-statistics to SMB and CMA we can not make statistically significant conclusions as to these risk factors.
+
+==== How to hedge?
+
+The analysis above, the risk factors are not tradable. Recently, however, there has been a large increase in the number of exchange traded funds that provide factor eposure. If you, as an investor in the Magellan fund, wanted to hedge the exposure to growth stocks (HML factor), you can simply buy $0.30 worth of a fund that tracks HML for each $1.00 that is invested in Magellan:
+
+image::magellan_fivefactors_hedge.PNG[]
+
+After running the same regression, you can now see that the coefficient and t-statistic for the HML factor are effectively zero. In practice, use an ETF that is both easily shortable with low short-rate fee to achieve this exposure.
+
+
+
+
+
+
+
