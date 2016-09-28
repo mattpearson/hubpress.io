@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Hedging Factors</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Hedging Factors">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hedging Factors">
+    <meta property="og:description" content="">
+
+    <!-- <meta name="twitter:site" content="">
+
+<meta name="twitter:creator" content="">
+
+<meta name="google-site-verification" content="">
+
+<meta property="fb:admins" content="">
+ -->
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link href="//fonts.googleapis.com/" rel="dns-prefetch">
+    <link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400&subset=latin,latin-ext" rel="stylesheet">
+
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/main.min.css?v=1475033811143"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/custom.css?v=1475033811143"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/asciidoctor-foundation.css?v=1475033811143"/>
+
+
+
+
+    <script type="text/javascript">
+      var ga_ua = 'UA-XXXXX-X';
+      
+      var disqus_shortname = 'example';
+      
+      var enable_pjax = true;
+
+      // Pace Options
+      // ==============
+      window.paceOptions = {
+        catchupTime: 100,
+        minTime: 100,
+        elements: false,
+        restartOnRequestAfter: 500,
+        startOnPageLoad: false
+      }
+
+      // Ghostium Globals
+      // ==============
+      window.GHOSTIUM = {};
+      GHOSTIUM.haveGA = typeof ga_ua !== 'undefined' && ga_ua !== 'UA-XXXXX-X';
+      GHOSTIUM.haveDisqus = typeof disqus_shortname !== 'undefined' && disqus_shortname !== 'example';
+      GHOSTIUM.enablePjax = typeof enable_pjax !== 'undefined' ? enable_pjax : true;
+    </script>
+
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/head-scripts.min.js?v=1475033811143"></script>
+
+    <link rel="canonical" href="https://mattpearson.github.io/2016/09/27/Hedging-Factors.html" />
+    <meta name="referrer" content="origin" />
+    
+    <meta property="og:site_name" content="mattpearson blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hedging Factors" />
+    <meta property="og:description" content="Review The CAPM suggests that a firm&amp;#8217;s expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. Risk-free rate can be the rate of return on US treasury bonds. In other words:  ( Ri - Rf ) &#x3D; scaling" />
+    <meta property="og:url" content="https://mattpearson.github.io/2016/09/27/Hedging-Factors.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Hedging Factors" />
+    <meta name="twitter:description" content="Review The CAPM suggests that a firm&amp;#8217;s expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. Risk-free rate can be the rate of return on US treasury bonds. In other words:  ( Ri - Rf ) &#x3D; scaling" />
+    <meta name="twitter:url" content="https://mattpearson.github.io/2016/09/27/Hedging-Factors.html" />
+    
+    <script type="application/ld+json">
+null
+    </script>
+
+    <meta name="generator" content="HubPress" />
+    <link rel="alternate" type="application/rss+xml" title="mattpearson blog" href="https://mattpearson.github.io/rss/" />
+  </head>
+  <body class="post-template">
+
+    <button data-action="open-drawer" id="drawer-button" class="drawer-button"><i class="fa fa-bars"></i></button>
+    <nav tabindex="-1" class="drawer">
+      <div class="drawer-container">
+        <!--.drawer-search(role="search")-->
+        <ul role="navigation" class="drawer-list">
+          
+          <li class="drawer-list-item">
+            <a href="https://mattpearson.github.io" data-pjax>
+              <i class="fa fa-home"></i>Home
+            </a>
+          </li>
+          <!-- <li class="drawer-list-item">
+            <a href="https://mattpearson.github.io" title="mattpearson blog" data-pjax>
+              <i class="fa fa-list-alt"></i>All posts
+            </a>
+          </li> -->
+          <li class="drawer-list-item">
+            <a href="https://mattpearson.github.io/rss/">
+              <i class="fa fa-rss"></i>Subscribe to Feed
+            </a>
+          </li>
+          <li class="drawer-list-divider"></li>
+          <li class="drawer-list-item drawer-list-title">
+            Follow me
+          </li>
+          
+          
+        </ul>
+      </div>
+    </nav>
+
+    <div class="drawer-overlay"></div>
+    <main id="container" role="main" class="container">
+      <div class="surface">
+        <div class="surface-container">
+          <div data-pjax-container class="content">
+            
+<section class="wrapper wrapper-post">
+  <div class="wrapper-container">
+    <article itemscope itemtype="http://schema.org/BlogPosting" role="article" class="post post">
+        <section class="post-container">
+          <header class="post-header">
+            <ul class="post-meta-list">
+              <li class="post-meta-item">
+                <time datetime="2016-09-27" itemprop="datePublished">
+                  a day ago
+                </time>
+              </li>
+              <li class="post-meta-item">
+                <a href="#disqus_thread" data-disqus-identifier="">Comments</a>
+              </li>
+            </ul>
+            <h1 itemprop="name headline" class="post-title"><a href="https://mattpearson.github.io/2016/09/27/Hedging-Factors.html" itemprop="url" data-pjax title="Hedging Factors">Hedging Factors</a></h1>
+            <!--h2 itemprop="about" class="post-subtitle"></h2-->
+          </header>
+          <aside class="post-side">
+            <div class="post-author">
+                <a href="" class="post-author-avatar">
+                  <img src="https://avatars.githubusercontent.com/u/2314787?v&#x3D;3" alt="mattpearson">
+                </a>
+              <div class="post-author-info">
+                <a href="" class="post-author-name">
+                  mattpearson
+                </a>
+                <p class="post-author-bio"></p>
+              </div>
+            </div>
+          </aside>
+          <div itemprop="articleBody" class="post-body">
+            <div class="sect3">
+<h4 id="_review">Review</h4>
+<div class="paragraph">
+<p>The CAPM suggests that a firm&#8217;s expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. Risk-free rate can be the rate of return on US treasury bonds. In other words:  ( Ri - Rf ) = scaling factor * ( Rm - Rf ). Put differently,</p>
+</div>
+<div class="paragraph">
+<p>( Ri - Rf ) = alpha + beta * ( Rm - Rf ).</p>
+</div>
+<div class="paragraph">
+<p>Gene Fama and Ken French argued convincingly that there are additional risk factors that can better describe the expected excess return, namely a size premium (SMB) and a value premium (HML). Recent research has shown that the expected return can further be improved with additional factors beyond size and value. Cliff Asness eloquently  <a href="https://www.aqr.com/cliffs-perspective/our-model-goes-to-six-and-saves-value-from-redundancy-along-the-way">describes them</a> as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Premium Factors</p>
+<div class="ulist">
+<ul>
+<li>
+<p>RM-RF - The return spread between the capitalization weighted stock market and cash.</p>
+</li>
+<li>
+<p>SMB - The return spread of small minus large stocks (i.e., the size effect).</p>
+</li>
+<li>
+<p>HML - The return spread of cheap minus expensive stocks (i.e., the value effect).</p>
+</li>
+<li>
+<p>RMW - The return spread of the most profitable firms minus the least profitable.</p>
+</li>
+<li>
+<p>CMA - The return spread of firms that invest conservatively minus aggressively.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With this knowledge, how can you evaluate the exposure a portfolio has to these risk factors?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_regression">Regression</h4>
+<div class="paragraph">
+<p>By re-expressing the CAPM to use the additional risk factors, the regression can be expressed as:</p>
+</div>
+<div class="paragraph">
+<p>( Ri - Rf ) = alpha + beta1 * ( Rm - Rf ) + beta2 * HML + beta3 * SMB + beta4 * RWM + beta5 * CMA</p>
+</div>
+<div class="paragraph">
+<p>Ken French maintains a library of factors for doing exactly these kinds of regressions. You can access it <a href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>One of the most famous portfolio managers of the 20th century is Peter Lynch, who was the PM for Fidelity&#8217;s Magellan Fund. What were his factor exposures during the time he was managing the fund, from 1977 to 1990?</p>
+</div>
+<div class="paragraph">
+<p>The regression results follow:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://mattpearson.github.io/images/magellan_fivefactors.PNG" alt="magellan fivefactors.PNG">
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously, his fund had a statistically strong positive relationship with the market (MKT-RF), and clearly a statistically strong negative relationship with HML and RMW factors. The negative relationship with HML suggests he was exposed to more growth stocks than value stocks, and firms that were least profitable rather than most profitable. Given the small t-statistics to SMB and CMA we can not make statistically significant conclusions as to his portfolio&#8217;s exposures to these risk factors.</p>
+</div>
+<div class="paragraph">
+<p>Remember when you are running such regressions, subtract out the risk free rate from the returns of the market and the security or fund you are analyzing. While the current ZIRP regime we&#8217;re currently in won&#8217;t make much of a difference, when you go back to the 80s and 90s it definitely will.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_hedge">How to hedge?</h4>
+<div class="paragraph">
+<p>The analysis above, the risk factors are not tradable. Within the past few years, however, there has been a large increase in the number of exchange traded funds that provide factor exposure. If you, as an investor in the Magellan fund, wanted to hedge the exposure to growth stocks (HML factor), you can simply buy $0.30 worth of a fund that tracks HML for each $1.00 that is invested in Magellan:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://mattpearson.github.io/images/magellan_fivefactors_hedge.PNG" alt="magellan fivefactors hedge.PNG">
+</div>
+</div>
+<div class="paragraph">
+<p>After running the same regression, you can now see that the coefficient and t-statistic for the HML factor are effectively zero. In practice, use an ETF that is both easily shortable with low short-rate fee to achieve the best results.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_python_code">Python Code</h4>
+<div class="paragraph">
+<p>This code is adapted from the solid work by <a href="https://github.com/nakulnayyar/FF3Factor">nakulnayyar</a>. It has been changed to use the new five factor model, and show an example of hedging.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import pandas as pd
+import numpy as np
+from StringIO import StringIO
+from zipfile import ZipFile
+from urllib import urlopen
+import pandas.io.data as web
+import statsmodels.api as sm
+url = urlopen("http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip")
+zipfile = ZipFile(StringIO(url.read()))
+FFdata = pd.read_csv(zipfile.open('F-F_Research_Data_5_Factors_2x3.CSV'),
+                     header = 0, names = ['Date','MKT-RF','SMB','HML','RMW','CMA','RF'],
+                     skiprows=3)
+
+FFdata = FFdata[:638]
+
+//#Convert YYYYMM into Date
+FFdata['Date'] = pd.to_datetime(FFdata['Date'], format = "%Y%m")
+FFdata.index = FFdata['Date']
+FFdata.drop(FFdata.columns[0], axis=1,inplace=True)
+
+#Drop Days in YYYY-MM-DD
+FFdata.index = FFdata.index.map(lambda x: x.strftime('%Y-%m'))
+
+#Convert into float
+FFdata = FFdata.astype('float')
+FFdata.tail()
+
+#Get Data from Yahoo
+start = datetime(1980,1,1)
+end = datetime(1990,10,1)
+f = web.get_data_yahoo("FMAGX", start, end, interval='m')
+
+#Delete Columns
+f.drop(f.columns[[0,1,2,3,4]], axis=1, inplace=True)
+#Fix Date Column
+f.index = f.index.map(lambda x: x.strftime('%Y-%m'))
+
+f['Return'] = f['Adj Close'].pct_change().shift(0) * 100.0
+f.head()
+
+
+
+data2 = pd.concat([f,FFdata], axis = 1)
+data2['XRtrn'] = (data2['Return'] - data2['RF'])
+df = data2[np.isfinite(data2['XRtrn'])]
+df.tail()
+
+
+y = df['XRtrn']
+
+
+X = df.ix[:,[2,3,4,5,6]]
+X = sm.add_constant(X)
+model = sm.OLS(y, X)
+results = model.fit()
+print(results.summary())
+
+y.plot()
+
+#Hedge HML
+y1 = y - results.params[3] * df['HML']
+
+model = sm.OLS(y1, X)
+results = model.fit()
+print(results.summary())</code></pre>
+</div>
+</div>
+</div>
+          </div>
+          <footer class="post-footer">
+            <div itemprop="author" itemscope itemtype="http://schema.org/Person" class="post-author">
+                <a href="" class="post-author-avatar">
+                  <img itemprop="image" src="https://avatars.githubusercontent.com/u/2314787?v&#x3D;3" alt="mattpearson">
+                </a>
+              <div class="post-author-info">
+                <h4 class="post-footer-heading">Written By</h4>
+                <a href="" itemprop="url" class="post-author-name">
+                  <span itemprop="name">mattpearson</span>
+                </a>
+                <p itemprop="description" class="post-author-bio"></p>
+                <p class="post-info">
+                  <b class="post-info-title">Published on</b>
+                  <time class="post-date">September 27, 2016</time>
+                </p>
+              </div>
+            </div>
+            <div class="post-social">
+              <h4 class="post-footer-heading">Spread the word</h4>
+              <a href="#" data-action="share-twitter"><i class="fa fa-fw fa-lg fa-twitter"></i></a>
+              <a href="#" data-action="share-facebook"><i class="fa fa-fw fa-lg fa-facebook"></i></a>
+              <a href="#" data-action="share-gplus"><i class="fa fa-fw fa-lg fa-google-plus"></i></a>
+            </div>
+          </footer>
+        </section>
+      <section itemprop="comment" class="post-comments">
+        <div id="disqus_thread"></div>
+      </section>
+    </article>
+
+    <footer role="contentinfo" class="footer">
+      <p><small>Copyright &copy; <span itemprop="copyrightHolder">mattpearson blog</span>. 2016. All Rights Reserved.</small></p>
+      <p><small><a href="http://ghostium.oswaldoacauan.com/" target="_blank">Ghostium Theme</a> by <a href="http://twitter.com/oswaldoacauan" target="_blank">@oswaldoacauan</a></small></p>
+      <p><small>Adapted by <a href="https://twitter.com/mgreau">Maxime Gréau</a></small></p>
+      <p><small>Published with <a href="http://hubpress.io">HubPress</a></small></p>
+    </footer>
+  </div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();
+      </script>
+
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/foot-scripts.min.js?v=1475033811143"></script>
+
+
+  </body>
+</html>
