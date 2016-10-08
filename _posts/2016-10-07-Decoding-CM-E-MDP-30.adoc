@@ -22,7 +22,7 @@ $ java -jar -Dsbe.target.language=cpp -Dsbe.keyword.append.token=_ sbe-tool-1.5.
 
 Once these commands are completed, you will have a new folder called 'mktdata' with classes (using the namespace 'mktdata') created for you by the Real Logic SBE tool using the CME-provided template file. 
 
-A huge plus is that it supports and utilizes C++11 features. 
+A huge plus is that it supports and utilizes C++11 http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/[features]. 
 
 
 
