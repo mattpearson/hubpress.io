@@ -1,17 +1,28 @@
 = Decoding CME's MDP 3.0
 
-MDP stands for Market Data Protocol, and CME is on their third revision of it. In this latest revision, they decomissioned FAST encoding with SBE. 
+MDP stands for Market Data Protocol, and CME is on their third revision of it. In this latest revision, they decomissioned https://en.wikipedia.org/wiki/FAST_protocol[FAST] encoding with SBE, which stands for Simple Binary Encoding. http://www.real-logic.co.uk/[Real Logic], a firm based in the UK, has developed an example SBE implementation in both Java and C++. CME's confluence wiki page has a good https://goo.gl/EegRYL[primer] on SBE and is a must-read for anybody serious in connecting with their market data feed.
+
+Once you are familiar with SBE you can jump right in to see the different types of messages by perusing their ftp://ftp.cmegroup.com/SBEFix/NRCert/Templates/templates_FixBinary.xml[template] file.
 
 Note, this requires that you have Java JDK installed, so if you don't, then run:
 
 [source,bash]
-su -c "yum install java-1.8.0-openjdk"
+su -c "yum install java-1.8.0-openjdk-devel"
 
-Next, use git to download and install Real Logic's simple binary encoding example implementation.
+Next, use git to download and install Real Logic's simple binary encoding example implementation. The following code will walk you through getting the latet snapshot from their github repository, building the software, downloading the CME SBE template file, and generating C++ code that implements SBE to the CME's spec.
+
 [source,bash]
 -------------------
 $ git clone https://github.com/real-logic/simple-binary-encoding.git
 $ ./gradlew
-
+$ cd ./sbe-tool/build/libs
+$ wget ftp://ftp.cmegroup.com/SBEFix/NRCert/Templates/templates_FixBinary.xml
+$ java -jar -Dsbe.target.language=cpp -Dsbe.keyword.append.token=_ sbe-tool-1.5.2-SNAPSHOT-all.jar templates_FixBinary.xml
 -------------------
+
+Once these commands are completed, you will have a new folder called 'mktdata' with classes (using the namespace 'mktdata') created for you by the Real Logic SBE tool using the CME-provided template file. 
+
+A huge plus is that it supports and utilizes C++11 features. 
+
+
 
