@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 28 Sep 2016 03:36:51 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Hedging Factors]]></title><description><![CDATA[<div class="sect3">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sat, 08 Oct 2016 01:45:47 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Decoding CME's MDP 3.0]]></title><description><![CDATA[<div class="paragraph">
+<p>MDP stands for Market Data Protocol, and CME is on their third revision of it. In this latest revision, they decomissioned <a href="https://en.wikipedia.org/wiki/FAST_protocol">FAST</a> encoding with SBE, which stands for Simple Binary Encoding. <a href="http://www.real-logic.co.uk/">Real Logic</a>, a firm based in the UK, has developed an example SBE implementation in both Java and C++. CME&#8217;s confluence wiki page has a good <a href="https://goo.gl/EegRYL">primer</a> on SBE and is a must-read for anybody serious in connecting with their market data feed.</p>
+</div>
+<div class="paragraph">
+<p>Once you are familiar with SBE you can jump right in to see the different types of messages by perusing their <a href="ftp://ftp.cmegroup.com/SBEFix/NRCert/Templates/templates_FixBinary.xml">template</a> file.</p>
+</div>
+<div class="paragraph">
+<p>Note, this requires that you have Java JDK installed, so if you don&#8217;t, then run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">su -c "yum install java-1.8.0-openjdk-devel"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, use git to download and install Real Logic&#8217;s simple binary encoding example implementation. The following code will walk you through getting the latet snapshot from their github repository, building the software, downloading the CME SBE template file, and generating C++ code that implements SBE to the CME&#8217;s spec.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/real-logic/simple-binary-encoding.git
+$ ./gradlew
+$ cd ./sbe-tool/build/libs
+$ wget ftp://ftp.cmegroup.com/SBEFix/NRCert/Templates/templates_FixBinary.xml
+$ java -jar -Dsbe.target.language=cpp -Dsbe.keyword.append.token=_ sbe-tool-1.5.2-SNAPSHOT-all.jar templates_FixBinary.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once these commands are completed, you will have a new folder called 'mktdata' with classes (using the namespace 'mktdata') created for you by the Real Logic SBE tool using the CME-provided template file.</p>
+</div>
+<div class="paragraph">
+<p>A huge plus is that it supports and utilizes C++11 <a href="http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/">features</a>.</p>
+</div>]]></description><link>https://mattpearson.github.io/2016/10/07/Decoding-CM-E-MDP-30.html</link><guid isPermaLink="true">https://mattpearson.github.io/2016/10/07/Decoding-CM-E-MDP-30.html</guid><pubDate>Fri, 07 Oct 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[Hedging Factors]]></title><description><![CDATA[<div class="sect3">
 <h4 id="_review">Review</h4>
 <div class="paragraph">
 <p>The CAPM suggests that a firm&#8217;s expected excess return (Ri) above the risk-free rate (Rf) is simply a scaled version of the market portfolio (Rm) expected excess return. Risk-free rate can be the rate of return on US treasury bonds. In other words:  ( Ri - Rf ) = scaling factor * ( Rm - Rf ). Put differently,</p>
