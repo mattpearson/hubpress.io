@@ -1,2 +1,17 @@
 = Decoding CME's MDP 3.0
 
+MDP stands for Market Data Protocol, and CME is on their third revision of it. In this latest revision, they decomissioned FAST encoding with SBE. 
+
+Note, this requires that you have Java JDK installed, so if you don't, then run:
+
+[source,bash]
+su -c "yum install java-1.8.0-openjdk"
+
+Next, use git to download and install Real Logic's simple binary encoding example implementation.
+[source,bash]
+-------------------
+$ git clone https://github.com/real-logic/simple-binary-encoding.git
+$ ./gradlew
+
+-------------------
+
