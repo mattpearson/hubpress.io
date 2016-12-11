@@ -38,9 +38,9 @@
     <link href="//fonts.googleapis.com/" rel="dns-prefetch">
     <link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400&subset=latin,latin-ext" rel="stylesheet">
 
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/main.min.css?v=1481492948930"/>
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/custom.css?v=1481492948930"/>
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/asciidoctor-foundation.css?v=1481492948930"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/main.min.css?v=1481493000339"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/custom.css?v=1481493000339"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/asciidoctor-foundation.css?v=1481493000339"/>
 
 
 
@@ -70,7 +70,7 @@
       GHOSTIUM.enablePjax = typeof enable_pjax !== 'undefined' ? enable_pjax : true;
     </script>
 
-    <script src="//mattpearson.github.io/themes/ghostium/assets/js/head-scripts.min.js?v=1481492948930"></script>
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/head-scripts.min.js?v=1481493000339"></script>
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     <meta name="referrer" content="origin" />
@@ -78,11 +78,11 @@
     <meta property="og:site_name" content="mattpearson blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="S&amp;P500 December Seasonality" />
-    <meta property="og:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. image::dec seasonality.png[] Python Code import datetime" />
+    <meta property="og:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Python Code import datetime import pandas_datareader as" />
     <meta property="og:url" content="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="S&amp;P500 December Seasonality" />
-    <meta name="twitter:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. image::dec seasonality.png[] Python Code import datetime" />
+    <meta name="twitter:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Python Code import datetime import pandas_datareader as" />
     <meta name="twitter:url" content="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     
     <script type="application/ld+json">
@@ -168,8 +168,10 @@ null
 <div class="paragraph">
 <p>As we approach the last weeks of the year, something to keep in mind for December&#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;P500 over December for years 1953 to 2016.</p>
 </div>
-<div class="paragraph">
-<p>image::dec seasonality.png[]</p>
+<div class="imageblock">
+<div class="content">
+<img src="https://mattpearson.github.io/images/dec_seasonality.png" alt="dec seasonality.png">
+</div>
 </div>
 </div>
 </div>
@@ -256,7 +258,7 @@ t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script src="//mattpearson.github.io/themes/ghostium/assets/js/foot-scripts.min.js?v=1481492948930"></script>
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/foot-scripts.min.js?v=1481493000339"></script>
 
 
   </body>
