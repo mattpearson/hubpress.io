@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Dec 2016 21:50:45 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[S&P500 December Seasonality]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Dec 2016 21:55:54 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[S&P500 December Seasonality]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>As we approach the last weeks of the year, something to keep in mind for December&#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;P500 over December for years 1953 to 2016.</p>
@@ -6,6 +6,14 @@
 <div class="imageblock">
 <div class="content">
 <img src="https://mattpearson.github.io/images/dec_seasonality.png" alt="dec seasonality.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Average returns are nice, but knowing how volatilite it is would also be good to know. Utilizing a pivot table to calculate the annualized standard deviation for each day is plotted below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://mattpearson.github.io/images/dec_seasonality_std.png" alt="dec seasonality std.png">
 </div>
 </div>
 </div>
@@ -30,7 +38,10 @@ df['Month'] = df.index.month
 
 df_dec = df[ df['Month'] == 12 ]
 t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
-(t.cumsum()*100.0).plot( grid=True)</code></pre>
+(t.cumsum()*100.0).plot( grid=True)
+
+t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.std)
+(t*np.sqrt(252)*100).plot( grid=True, title='December Return Annualized Volatility By Day')</code></pre>
 </div>
 </div>
 </div>]]></description><link>https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html</link><guid isPermaLink="true">https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html</guid><pubDate>Sun, 11 Dec 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[Decoding CME's MDP 3.0]]></title><description><![CDATA[<div class="paragraph">
