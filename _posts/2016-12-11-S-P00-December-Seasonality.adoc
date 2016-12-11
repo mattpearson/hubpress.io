@@ -4,6 +4,9 @@ As we approach the last weeks of the year, something to keep in mind for Decembe
 
 image::dec_seasonality.png[]
 
+Average returns are nice, but knowing how volatilite it is would also be good to know. Utilizing a pivot table to calculate the annualized standard deviation for each day is plotted below:
+
+image::dec_seasonality_std.png[]
 
 ==== Python Code
 
@@ -27,4 +30,8 @@ df['Month'] = df.index.month
 df_dec = df[ df['Month'] == 12 ]
 t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
 (t.cumsum()*100.0).plot( grid=True)
+
+t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.std)
+(t*np.sqrt(252)*100).plot( grid=True, title='December Return Annualized Volatility By Day')
+
 
