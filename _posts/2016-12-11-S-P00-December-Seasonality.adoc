@@ -2,7 +2,7 @@
 
 As we approach the last weeks of the year, something to keep in mind for December's seasonality. X axis is day of month, and Y axis is cumulative return of S&P500 over December for years 1953 to 2016.
 
-image::dec seasonality.png[]
+image::dec_seasonality.png[]
 
 
 ==== Python Code
