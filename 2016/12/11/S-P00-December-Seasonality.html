@@ -38,9 +38,9 @@
     <link href="//fonts.googleapis.com/" rel="dns-prefetch">
     <link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400&subset=latin,latin-ext" rel="stylesheet">
 
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/main.min.css?v=1481493045672"/>
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/custom.css?v=1481493045672"/>
-    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/asciidoctor-foundation.css?v=1481493045672"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/main.min.css?v=1481493354752"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/custom.css?v=1481493354752"/>
+    <link rel="stylesheet" href="//mattpearson.github.io/themes/ghostium/assets/css/asciidoctor-foundation.css?v=1481493354752"/>
 
 
 
@@ -70,7 +70,7 @@
       GHOSTIUM.enablePjax = typeof enable_pjax !== 'undefined' ? enable_pjax : true;
     </script>
 
-    <script src="//mattpearson.github.io/themes/ghostium/assets/js/head-scripts.min.js?v=1481493045672"></script>
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/head-scripts.min.js?v=1481493354752"></script>
 
     <link rel="canonical" href="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     <meta name="referrer" content="origin" />
@@ -78,11 +78,11 @@
     <meta property="og:site_name" content="mattpearson blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="S&amp;P500 December Seasonality" />
-    <meta property="og:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Python Code import datetime import pandas_datareader as" />
+    <meta property="og:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Average returns are nice, but knowing how volatilite" />
     <meta property="og:url" content="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="S&amp;P500 December Seasonality" />
-    <meta name="twitter:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Python Code import datetime import pandas_datareader as" />
+    <meta name="twitter:description" content="As we approach the last weeks of the year, something to keep in mind for December&amp;#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;amp;P500 over December for years 1953 to 2016. Average returns are nice, but knowing how volatilite" />
     <meta name="twitter:url" content="https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html" />
     
     <script type="application/ld+json">
@@ -173,6 +173,14 @@ null
 <img src="https://mattpearson.github.io/images/dec_seasonality.png" alt="dec seasonality.png">
 </div>
 </div>
+<div class="paragraph">
+<p>Average returns are nice, but knowing how volatilite it is would also be good to know. Utilizing a pivot table to calculate the annualized standard deviation for each day is plotted below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://mattpearson.github.io/images/dec_seasonality_std.png" alt="dec seasonality std.png">
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -195,7 +203,10 @@ df['Month'] = df.index.month
 
 df_dec = df[ df['Month'] == 12 ]
 t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
-(t.cumsum()*100.0).plot( grid=True)</code></pre>
+(t.cumsum()*100.0).plot( grid=True)
+
+t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.std)
+(t*np.sqrt(252)*100).plot( grid=True, title='December Return Annualized Volatility By Day')</code></pre>
 </div>
 </div>
 </div>
@@ -258,7 +269,7 @@ t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
         hljs.initHighlightingOnLoad();
       </script>
 
-    <script src="//mattpearson.github.io/themes/ghostium/assets/js/foot-scripts.min.js?v=1481493045672"></script>
+    <script src="//mattpearson.github.io/themes/ghostium/assets/js/foot-scripts.min.js?v=1481493354752"></script>
 
 
   </body>
