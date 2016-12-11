@@ -1,39 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Dec 2016 21:50:00 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[S&P500 December Seasonality]]></title><description><![CDATA[<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>As we approach the last weeks of the year, something to keep in mind for December&#8217;s seasonality. X axis is day of month, and Y axis is cumulative return of S&amp;P500 over December for years 1953 to 2016.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://mattpearson.github.io/images/dec_seasonality.png" alt="dec seasonality.png">
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_python_code">Python Code</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-python" data-lang="python">import datetime
-import pandas_datareader as web
-import pandas as pd
-import numpy as np
-
-gspc = web.DataReader( '^GSPC', 'yahoo', datetime.datetime(1953,1,1), datetime.datetime(2016, 12, 10))
-
-df = pd.DataFrame( [ gspc['Adj Close'] ] ).transpose()
-df.columns=['SPY']
-r = df['SPY'].pct_change().shift(-1)
-df['SpyRet'] = r
-df['DOM'] = df.index.day
-df['Month'] = df.index.month
-
-df_dec = df[ df['Month'] == 12 ]
-t = pd.pivot_table( df_dec, values='SpyRet', columns='DOM', aggfunc=np.mean)
-(t.cumsum()*100.0).plot( grid=True)</code></pre>
-</div>
-</div>
-</div>]]></description><link>https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html</link><guid isPermaLink="true">https://mattpearson.github.io/2016/12/11/S-P00-December-Seasonality.html</guid><pubDate>Sun, 11 Dec 2016 00:00:00 GMT</pubDate></item><item><title><![CDATA[Decoding CME's MDP 3.0]]></title><description><![CDATA[<div class="paragraph">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mattpearson blog]]></title><description><![CDATA[computer science and quantiative finance]]></description><link>https://mattpearson.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Dec 2016 21:50:18 GMT</lastBuildDate><atom:link href="https://mattpearson.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Decoding CME's MDP 3.0]]></title><description><![CDATA[<div class="paragraph">
 <p>MDP stands for Market Data Protocol, and CME is on their third revision of it. In this latest revision, they decomissioned <a href="https://en.wikipedia.org/wiki/FAST_protocol">FAST</a> encoding and replaced it with SBE, which stands for Simple Binary Encoding. <a href="http://www.real-logic.co.uk/">Real Logic</a>, a firm based in the UK, has developed an example SBE implementation that generates code in both Java and C++ from a SBE template file. CME&#8217;s confluence wiki page has a good <a href="https://goo.gl/EegRYL">primer</a> on SBE and is a must-read for anybody serious in connecting with CME&#8217;s market data feed.</p>
 </div>
 <div class="paragraph">
